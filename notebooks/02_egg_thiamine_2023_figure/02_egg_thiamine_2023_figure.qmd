@@ -1,0 +1,208 @@
+---
+title: "2023 Yukon Egg Thiamine Figures"
+author: "Drew Porter"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: true
+    fig-width: 8
+    fig-height: 6
+execute:
+  warning: false
+  message: false
+  echo: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# Load packages
+library(tidyverse)
+library(here)
+library(knitr)
+
+# Set global chunk options
+knitr::opts_chunk$set(
+  fig.width = 8,
+  fig.height = 6,
+  fig.align = 'center',
+  dpi = 300,
+  warning = FALSE,
+  message = FALSE
+)
+
+# Set ggplot theme
+theme_set(theme_classic())
+
+# Define global ggplot variables
+point_size = 4
+jitter_width = 0.2
+
+# Read in data
+egg_thiamine <- read_rds(file = here("data", "yukon_egg_thiamine_2023.rds"))
+
+# Remove NA rows
+egg_thiamine <- na.omit(egg_thiamine)
+```
+
+## Egg thiamine concentration by site
+```{r}
+#| label: concentration-thiamine-site
+
+thiamine_concentration_site <- egg_thiamine |> 
+  ggplot(aes(x = site, y = nmol_T_g)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none") +
+  facet_grid(~group, scales = "free_x", space = "free")
+
+thiamine_concentration_site
+```
+
+## Egg thiamine concentration by group
+```{r}
+#| label: concentration-thiamine-group
+
+thiamine_concentration_group <- egg_thiamine |> 
+  ggplot(aes(x = group, y = nmol_T_g)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none")
+
+thiamine_concentration_group
+```
+
+## Total egg thiamine by site
+```{r}
+#| label: total-thiamine-site
+
+total_thiamine_site <- egg_thiamine |> 
+  ggplot(aes(x = site, y = nmol_T_egg)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none") +
+  facet_grid(~group, scales = "free_x", space = "free")
+
+total_thiamine_site
+```
+
+## Total egg thiamine by group
+```{r}
+#| label: total-thiamine-group
+
+total_thiamine_group <- egg_thiamine |> 
+  ggplot(aes(x = group, y = nmol_T_egg)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none")
+
+total_thiamine_group
+```
+
+## Egg size by site
+```{r}
+#| label: egg-size-site
+
+egg_size_site <- egg_thiamine |> 
+  ggplot(aes(x = site, y = g_egg)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none") +
+  facet_grid(~group, scales = "free_x", space = "free")
+
+egg_size_site
+```
+
+## Egg size by group
+```{r}
+#| label: egg-size-group
+
+egg_size_group <- egg_thiamine |> 
+  ggplot(aes(x = group, y = g_egg)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none")
+
+egg_size_group
+```
+
+```{r}
+#| label: regression
+
+test_fig <- egg_thiamine |> 
+  ggplot(aes(x = g_egg, y = nmol_T_g)) +
+  geom_point(aes(x = g_egg, y = nmol_T_g, color = group), size = 6) +
+  geom_smooth(method = "lm")
+
+test_fit <- lm(nmol_T_g ~ g_egg, data = egg_thiamine)
+summary(test_fit)
+
+test_fig
+
+test_fig2 <- egg_thiamine |> 
+  ggplot() +
+  geom_point(aes(x = g_egg, y = nmol_T_egg, color = group, shape = site), size = 4)
+
+test_fig2
+
+
+```
+
+
+
+
+``` {r}
+#| label: placeholder
+
+spawning <- egg_thiamine |> 
+  filter(group == "Spawning")
+
+
+fig1 <- spawning |> 
+  ggplot(aes(x = nmol_T_egg, y = nmol_T_g)) +
+  geom_point()
+
+fig1
+
+spawning_fit <- lm(nmol_T_g ~ nmol_T_egg, data = spawning)
+summary(spawning_fit)
+
+```
+
+
+```{r}
+#| label: save-plots
+#| include: false
+
+plots <- list(
+  thiamine_concentration_site = thiamine_concentration_site,
+  thiamine_concentration_group = thiamine_concentration_group,
+  total_thiamine_site = total_thiamine_site,
+  total_thiamine_group = total_thiamine_group,
+  egg_size_site = egg_size_site,
+  egg_size_group = egg_size_group
+)
+
+
+for (plot_name in names(plots)) {
+  ggsave(paste0(plot_name, ".png"), 
+       plot = plots[[plot_name]],
+       path = here("output"),
+       height = 6,
+       width = 8,
+       units = "in",
+       dpi = 300)
+}
+```
