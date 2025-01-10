@@ -14,7 +14,13 @@ library(tidyverse)
 library(readxl)
 library(here)
 
-data <- read_xlsx(path = here("data", "yukon23eggT.xlsx"), na = c("NA", "X"))
+data <- read_xlsx(path = here("data", "yukon23eggT.xlsx"), na = c("NA", "X", "x"))
+
+# Correct nmol T/g for dry mass
+data <- data |> 
+  mutate(nmol_T_g_dw_corrected = (nmol_T_g / ((100 - moisture) / 100))) |> 
+  relocate(nmol_T_g_dw_corrected, .after = nmol_T_g)
+
 
 data <- data |> 
   mutate(year = factor("2023")) |> 
