@@ -19,7 +19,9 @@ data <- read_xlsx(path = here("data", "yukon23eggT.xlsx"), na = c("NA", "X", "x"
 # Correct nmol T/g for dry mass
 data <- data |> 
   mutate(nmol_T_g_dw_corrected = (nmol_T_g / ((100 - moisture) / 100))) |> 
-  relocate(nmol_T_g_dw_corrected, .after = nmol_T_g)
+  relocate(nmol_T_g_dw_corrected, .after = nmol_T_g) |> 
+  rename(pct_moisture = moisture,
+         pct_lipid_wet = lipid)
 
 
 data <- data |> 

@@ -37,21 +37,37 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 
+```
+
+```{r}
+#| label: import-data
+
+# Read in data
+raw_egg_thiamine <- read_rds(file = here("data", "yukon_egg_thiamine_2023.rds"))
+
+# Remove cases with missing nmol_T_g or nmol_T_egg values
+egg_thiamine <- raw_egg_thiamine |> 
+  filter(!is.na(nmol_T_g) & !is.na(nmol_T_egg))
+
+# Remove cases with missing dry weight corrected values
+egg_thiamine_dw <- egg_thiamine |> 
+  filter(!is.na(nmol_T_g_dw_corrected))
+```
+
+```{r}
+#| label: define-global-variables
+
 # Set ggplot theme
 theme_set(theme_classic())
 
 # Define global ggplot variables
 point_size = 4
 jitter_width = 0.2
-
-# Read in data
-egg_thiamine <- read_rds(file = here("data", "yukon_egg_thiamine_2023.rds"))
-
-# Remove NA rows
-egg_thiamine <- na.omit(egg_thiamine)
 ```
 
 ## Egg thiamine concentration by site
+
+BlakjSDgfkjbSDgjhsdrgbsr
 ```{r}
 #| label: concentration-thiamine-site
 
@@ -65,6 +81,14 @@ thiamine_concentration_site <- egg_thiamine |>
 
 thiamine_concentration_site
 ```
+
+iklsndg;ljkSngkSJDngb
+
+- Bulleted list
+- item 2 
+
+1. Numbered
+2. item 2
 
 ## Egg thiamine concentration by group
 ```{r}
@@ -138,6 +162,65 @@ egg_size_group <- egg_thiamine |>
 egg_size_group
 ```
 
+## Egg percent moisture by site
+```{r}
+#| label: egg-moisture-site
+
+egg_moisture_site <- egg_thiamine_dw |> 
+  ggplot(aes(x = site, y = pct_moisture)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none") +
+  facet_grid(~group, scales = "free_x", space = "free")
+
+egg_moisture_site
+```
+
+## Egg percent moisture by group
+```{r}
+#| label: egg-moisture-group
+
+egg_moisture_group <- egg_thiamine_dw |> 
+  ggplot(aes(x = group, y = pct_moisture)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none")
+
+egg_moisture_group
+```
+
+## Egg percent lipid by site
+```{r}
+#| label: egg-lipid-site
+
+egg_lipid_site <- egg_thiamine_dw |> 
+  ggplot(aes(x = site, y = pct_lipid_wet)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none") +
+  facet_grid(~group, scales = "free_x", space = "free")
+
+egg_lipid_site
+```
+
+## Egg percent lipid by group
+```{r}
+#| label: egg-lipid-group
+
+egg_lipid_group <- egg_thiamine_dw |> 
+  ggplot(aes(x = group, y = pct_lipid_wet)) +
+  geom_boxplot(aes(fill = group),
+               outlier.shape = NA) +
+  geom_jitter(width = jitter_width) +
+  guides(fill = "none")
+
+egg_lipid_group
+```
+
+
 ```{r}
 #| label: regression
 
@@ -161,8 +244,6 @@ test_fig2
 ```
 
 
-
-
 ``` {r}
 #| label: placeholder
 
@@ -172,7 +253,12 @@ spawning <- egg_thiamine |>
 
 fig1 <- spawning |> 
   ggplot(aes(x = nmol_T_egg, y = nmol_T_g)) +
-  geom_point()
+  geom_point(size = 3) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), 
+                     limits = c(0, max(spawning$nmol_T_egg + 0.2))) +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0, max(spawning$nmol_T_g + 5)))
 
 fig1
 
@@ -181,6 +267,40 @@ summary(spawning_fit)
 
 ```
 
+## Dry weight corrected spawner biplot
+```{r}
+#| label: dw-spawner-fit
+
+dw_spawners <- egg_thiamine_dw |> 
+  filter(group == "Spawning")
+
+dw_spawners_plot <- dw_spawners |> 
+  ggplot(aes(x = nmol_T_egg, y = nmol_T_g_dw_corrected)) +
+  geom_point(aes(shape = site, color = site), size = 3) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), 
+                     limits = c(0, max(dw_spawners$nmol_T_egg + 0.2))) +
+  scale_y_continuous(expand = c(0,0),
+                     limits = c(0, max(dw_spawners$nmol_T_g_dw_corrected + 5))) 
+
+dw_spawners_plot
+
+dw_spawners_fit <- lm(nmol_T_g_dw_corrected ~ nmol_T_egg, data = dw_spawners)
+summary(dw_spawners_fit)
+
+```
+
+## Percent moisture vs egg size
+```{r}
+#| label: moisture-vs-size
+
+moisture_size_plot <- egg_thiamine_dw |> 
+  ggplot(aes(x = g_egg, y = pct_moisture)) +
+  geom_point(size = 2)
+
+moisture_size_plot
+
+```
 
 ```{r}
 #| label: save-plots
@@ -192,7 +312,11 @@ plots <- list(
   total_thiamine_site = total_thiamine_site,
   total_thiamine_group = total_thiamine_group,
   egg_size_site = egg_size_site,
-  egg_size_group = egg_size_group
+  egg_size_group = egg_size_group,
+  egg_moisture_site = egg_moisture_site,
+  egg_moisture_group = egg_moisture_group,
+  egg_lipid_site = egg_lipid_site,
+  egg_lipid_group = egg_lipid_group
 )
 
 
