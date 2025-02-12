@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Drew Porter">
-<meta name="dcterms.date" content="2025-01-10">
+<meta name="dcterms.date" content="2025-02-12">
 
 <title>2023 Yukon Egg Thiamine Figures</title>
 <style>
@@ -92,6 +92,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#egg-percent-lipid-by-site" id="toc-egg-percent-lipid-by-site" class="nav-link" data-scroll-target="#egg-percent-lipid-by-site">Egg percent lipid by site</a></li>
   <li><a href="#egg-percent-lipid-by-group" id="toc-egg-percent-lipid-by-group" class="nav-link" data-scroll-target="#egg-percent-lipid-by-group">Egg percent lipid by group</a></li>
   <li><a href="#dry-weight-corrected-spawner-biplot" id="toc-dry-weight-corrected-spawner-biplot" class="nav-link" data-scroll-target="#dry-weight-corrected-spawner-biplot">Dry weight corrected spawner biplot</a></li>
+  <li><a href="#percent-moisture-vs-egg-size" id="toc-percent-moisture-vs-egg-size" class="nav-link" data-scroll-target="#percent-moisture-vs-egg-size">Percent moisture vs egg size</a></li>
+  <li><a href="#nmol-tg-dry-vs-nmol-tg-wet-linear-regression-overall" id="toc-nmol-tg-dry-vs-nmol-tg-wet-linear-regression-overall" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-nmol-tg-wet-linear-regression-overall">nmol T/g (dry) vs nmol T/g (wet) (linear regression, overall)</a></li>
+  <li><a href="#nmol-tg-dry-vs-nmol-tg-wet-linear-regression-spawners" id="toc-nmol-tg-dry-vs-nmol-tg-wet-linear-regression-spawners" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-nmol-tg-wet-linear-regression-spawners">nmol T/g (dry) vs nmol T/g (wet) (linear regression, spawners)</a></li>
+  <li><a href="#nmol-tg-dry-vs-site-box-plot" id="toc-nmol-tg-dry-vs-site-box-plot" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-site-box-plot">nmol T/g (dry) vs site (box plot)</a></li>
+  <li><a href="#nmol-tg-dry-vs-group-box-plot" id="toc-nmol-tg-dry-vs-group-box-plot" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-group-box-plot">nmol T/g (dry) vs group (box plot)</a></li>
+  <li><a href="#nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-overall" id="toc-nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-overall" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-overall">nmol T/g (dry) vs nmol T/individual egg (linear regression, overall)</a></li>
+  <li><a href="#nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-spawners" id="toc-nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-spawners" class="nav-link" data-scroll-target="#nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-spawners">nmol T/g (dry) vs nmol T/individual egg (linear regression, spawners)</a></li>
+  <li><a href="#nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-overall" id="toc-nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-overall" class="nav-link" data-scroll-target="#nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-overall">nmol T/g (wet) vs nmol T/individual egg (linear regression, overall)</a></li>
+  <li><a href="#nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-spawners" id="toc-nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-spawners" class="nav-link" data-scroll-target="#nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-spawners">nmol T/g (wet) vs nmol T/individual egg (linear regression, spawners)</a></li>
   </ul>
 </nav>
 </div>
@@ -116,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 10, 2025</p>
+      <p class="date">February 12, 2025</p>
     </div>
   </div>
   
@@ -140,7 +149,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove cases with missing dry weight corrected values</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>egg_thiamine_dw <span class="ot">&lt;-</span> egg_thiamine <span class="sc">|&gt;</span> </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nmol_T_g_dw_corrected))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nmol_T_g_dw_corrected))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create spawning subsets</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>egg_thiamine_spawning <span class="ot">&lt;-</span> egg_thiamine <span class="sc">|&gt;</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"Spawning"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>egg_thiamine_dw_spawning <span class="ot">&lt;-</span> egg_thiamine_dw <span class="sc">|&gt;</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">==</span> <span class="st">"Spawning"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-layout-align="center">
@@ -156,7 +172,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="egg-thiamine-concentration-by-site" class="level2">
 <h2 class="anchored" data-anchor-id="egg-thiamine-concentration-by-site">Egg thiamine concentration by site</h2>
-<p>BlakjSDgfkjbSDgjhsdrgbsr</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -178,15 +193,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>iklsndg;ljkSngkSJDngb</p>
-<ul>
-<li>Bulleted list</li>
-<li>item 2</li>
-</ul>
-<ol type="1">
-<li>Numbered</li>
-<li>item 2</li>
-</ol>
 </section>
 <section id="egg-thiamine-concentration-by-group" class="level2">
 <h2 class="anchored" data-anchor-id="egg-thiamine-concentration-by-group">Egg thiamine concentration by group</h2>
@@ -518,7 +524,7 @@ F-statistic: 18.14 on 1 and 20 DF,  p-value: 0.0003834</code></pre>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>dw_spawners_plot <span class="ot">&lt;-</span> dw_spawners <span class="sc">|&gt;</span> </span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> nmol_T_egg, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> site, <span class="at">color =</span> site), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(dw_spawners<span class="sc">$</span>nmol_T_egg <span class="sc">+</span> <span class="fl">0.2</span>))) <span class="sc">+</span></span>
@@ -558,6 +564,353 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 1.628 on 20 degrees of freedom
 Multiple R-squared:  0.6445,    Adjusted R-squared:  0.6267 
 F-statistic: 36.25 on 1 and 20 DF,  p-value: 6.918e-06</code></pre>
+</div>
+</div>
+</section>
+<section id="percent-moisture-vs-egg-size" class="level2">
+<h2 class="anchored" data-anchor-id="percent-moisture-vs-egg-size">Percent moisture vs egg size</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>moisture_size_plot <span class="ot">&lt;-</span> egg_thiamine_dw <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> g_egg, <span class="at">y =</span> pct_moisture)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>moisture_size_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/moisture-vs-size-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-nmol-tg-wet-linear-regression-overall" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-nmol-tg-wet-linear-regression-overall">nmol T/g (dry) vs nmol T/g (wet) (linear regression, overall)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>drywet_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g_dw_corrected <span class="sc">~</span> nmol_T_g, <span class="at">data =</span> egg_thiamine_dw)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drywet_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g_dw_corrected ~ nmol_T_g, data = egg_thiamine_dw)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.2807 -0.9587 -0.0125  0.5029  5.4694 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.79480    0.37982   2.093   0.0389 *  
+nmol_T_g     2.20784    0.03791  58.246   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.385 on 102 degrees of freedom
+Multiple R-squared:  0.9708,    Adjusted R-squared:  0.9705 
+F-statistic:  3393 on 1 and 102 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>drywet_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw, <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_g, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">21</span>)) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>drywet_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-vs-wet-thiamine-conc-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-nmol-tg-wet-linear-regression-spawners" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-nmol-tg-wet-linear-regression-spawners">nmol T/g (dry) vs nmol T/g (wet) (linear regression, spawners)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>drywet_spawn_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g_dw_corrected <span class="sc">~</span> nmol_T_g, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> egg_thiamine_dw_spawning)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(drywet_spawn_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g_dw_corrected ~ nmol_T_g, data = egg_thiamine_dw_spawning)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.3835 -0.7961 -0.5072  0.9064  3.1008 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   3.4021     1.0909   3.119  0.00541 ** 
+nmol_T_g      1.9063     0.1944   9.805  4.4e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.133 on 20 degrees of freedom
+Multiple R-squared:  0.8278,    Adjusted R-squared:  0.8192 
+F-statistic: 96.14 on 1 and 20 DF,  p-value: 4.402e-09</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>drywet_spawn_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw_spawning,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_g, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>drywet_spawn_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-vs-wet-thiamine-conc-spawn-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-site-box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-site-box-plot">nmol T/g (dry) vs site (box plot)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dryconc_site <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw, <span class="fu">aes</span>(<span class="at">x =</span> site, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> jitter_width)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>dryconc_site</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-conc-site-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-group-box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-group-box-plot">nmol T/g (dry) vs group (box plot)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dryconc_group <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> jitter_width)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>dryconc_group</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-conc-group-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-overall" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-overall">nmol T/g (dry) vs nmol T/individual egg (linear regression, overall)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dryegg_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g_dw_corrected <span class="sc">~</span> nmol_T_egg, <span class="at">data =</span> egg_thiamine_dw)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dryegg_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g_dw_corrected ~ nmol_T_egg, data = egg_thiamine_dw)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-11.826  -6.689  -1.459   6.313  23.931 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   16.631      2.427   6.853 5.62e-10 ***
+nmol_T_egg     4.988      2.376   2.099   0.0383 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.935 on 102 degrees of freedom
+Multiple R-squared:  0.04141,   Adjusted R-squared:  0.03202 
+F-statistic: 4.407 on 1 and 102 DF,  p-value: 0.03827</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dryegg_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw, <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_egg, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>)) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>dryegg_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-vs-egg-thiamine-conc-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-spawners" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-dry-vs-nmol-tindividual-egg-linear-regression-spawners">nmol T/g (dry) vs nmol T/individual egg (linear regression, spawners)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>dryegg_spawn_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g_dw_corrected <span class="sc">~</span> nmol_T_egg, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> egg_thiamine_dw_spawning)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dryegg_spawn_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g_dw_corrected ~ nmol_T_egg, data = egg_thiamine_dw_spawning)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.2054 -0.9872  0.3561  1.0794  2.9039 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   7.7252     1.0721   7.205 5.64e-07 ***
+nmol_T_egg    5.7172     0.9496   6.021 6.92e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.628 on 20 degrees of freedom
+Multiple R-squared:  0.6445,    Adjusted R-squared:  0.6267 
+F-statistic: 36.25 on 1 and 20 DF,  p-value: 6.918e-06</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dryegg_spawn_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_dw_spawning,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_egg, <span class="at">y =</span> nmol_T_g_dw_corrected)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>)) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>dryegg_spawn_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/dry-vs-egg-thiamine-conc-spawn-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-overall" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-overall">nmol T/g (wet) vs nmol T/individual egg (linear regression, overall)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>wetegg_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g <span class="sc">~</span> nmol_T_egg, <span class="at">data =</span> egg_thiamine)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wetegg_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g ~ nmol_T_egg, data = egg_thiamine)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.3287 -2.6927 -0.4267  1.8731 11.4112 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.8304     0.8987   6.488  1.7e-09 ***
+nmol_T_egg    3.2901     0.9109   3.612 0.000434 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.387 on 129 degrees of freedom
+Multiple R-squared:  0.09185,   Adjusted R-squared:  0.08481 
+F-statistic: 13.05 on 1 and 129 DF,  p-value: 0.0004337</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>wetegg_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine, <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_egg, <span class="at">y =</span> nmol_T_g)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>)) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25</span>))</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>wetegg_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/wet-vs-egg-thiamine-conc-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-spawners" class="level2">
+<h2 class="anchored" data-anchor-id="nmol-tg-wet-vs-nmol-tindividual-egg-linear-regression-spawners">nmol T/g (wet) vs nmol T/individual egg (linear regression, spawners)</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>wetegg_spawn_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(nmol_T_g <span class="sc">~</span> nmol_T_egg, <span class="at">data =</span> egg_thiamine_spawning)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(wetegg_spawn_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = nmol_T_g ~ nmol_T_egg, data = egg_thiamine_spawning)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.7988 -0.7312  0.1877  0.5866  1.8604 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   2.9675     0.6214   4.775 0.000115 ***
+nmol_T_egg    2.3443     0.5504   4.260 0.000383 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9436 on 20 degrees of freedom
+Multiple R-squared:  0.4757,    Adjusted R-squared:  0.4495 
+F-statistic: 18.14 on 1 and 20 DF,  p-value: 0.0003834</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>wetegg_spawn_biplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> egg_thiamine_spawning,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">aes</span>(<span class="at">x =</span> nmol_T_egg, <span class="at">y =</span> nmol_T_g)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>)) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>wetegg_spawn_biplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="02_egg_thiamine_2023_figure_files/figure-html/wet-vs-egg-thiamine-conc-spawn-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2400"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>

@@ -52,6 +52,14 @@ egg_thiamine <- raw_egg_thiamine |>
 # Remove cases with missing dry weight corrected values
 egg_thiamine_dw <- egg_thiamine |> 
   filter(!is.na(nmol_T_g_dw_corrected))
+
+# Create spawning subsets
+egg_thiamine_spawning <- egg_thiamine |> 
+  filter(group == "Spawning")
+
+egg_thiamine_dw_spawning <- egg_thiamine_dw |> 
+  filter(group == "Spawning")
+
 ```
 
 ```{r}
@@ -67,7 +75,6 @@ jitter_width = 0.2
 
 ## Egg thiamine concentration by site
 
-BlakjSDgfkjbSDgjhsdrgbsr
 ```{r}
 #| label: concentration-thiamine-site
 
@@ -82,13 +89,6 @@ thiamine_concentration_site <- egg_thiamine |>
 thiamine_concentration_site
 ```
 
-iklsndg;ljkSngkSJDngb
-
-- Bulleted list
-- item 2 
-
-1. Numbered
-2. item 2
 
 ## Egg thiamine concentration by group
 ```{r}
@@ -299,6 +299,141 @@ moisture_size_plot <- egg_thiamine_dw |>
   geom_point(size = 2)
 
 moisture_size_plot
+
+```
+
+
+## nmol T/g (dry) vs nmol T/g (wet) (linear regression, overall)
+``` {r}
+#| label: dry-vs-wet-thiamine-conc
+
+drywet_fit <- lm(nmol_T_g_dw_corrected ~ nmol_T_g, data = egg_thiamine_dw)
+summary(drywet_fit)
+
+drywet_biplot <- ggplot(data = egg_thiamine_dw, aes(x = nmol_T_g, y = nmol_T_g_dw_corrected)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,21)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,50))
+
+drywet_biplot
+
+```
+
+
+## nmol T/g (dry) vs nmol T/g (wet) (linear regression, spawners)
+``` {r}
+#| label: dry-vs-wet-thiamine-conc-spawn
+
+drywet_spawn_fit <- lm(nmol_T_g_dw_corrected ~ nmol_T_g, 
+                       data = egg_thiamine_dw_spawning)
+summary(drywet_spawn_fit)
+
+drywet_spawn_biplot <- ggplot(data = egg_thiamine_dw_spawning,
+                              aes(x = nmol_T_g, y = nmol_T_g_dw_corrected)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,10)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,20))
+
+drywet_spawn_biplot
+
+```
+
+## nmol T/g (dry) vs site (box plot)
+``` {r}
+#| label: dry-conc-site
+
+dryconc_site <- ggplot(data = egg_thiamine_dw, aes(x = site, y = nmol_T_g_dw_corrected)) +
+  geom_boxplot(aes(fill = group)) +
+  geom_jitter(width = jitter_width)
+
+dryconc_site
+
+```
+
+## nmol T/g (dry) vs group (box plot)
+``` {r}
+#| label: dry-conc-group
+
+dryconc_group <- ggplot(data = egg_thiamine_dw, aes(x = group, y = nmol_T_g_dw_corrected)) +
+  geom_boxplot(aes(fill = group)) +
+  geom_jitter(width = jitter_width)
+
+dryconc_group
+
+```
+
+## nmol T/g (dry) vs nmol T/individual egg (linear regression, overall)
+``` {r}
+#| label: dry-vs-egg-thiamine-conc
+
+dryegg_fit <- lm(nmol_T_g_dw_corrected ~ nmol_T_egg, data = egg_thiamine_dw)
+summary(dryegg_fit)
+
+dryegg_biplot <- ggplot(data = egg_thiamine_dw, aes(x = nmol_T_egg, y = nmol_T_g_dw_corrected)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,50))
+
+dryegg_biplot
+
+```
+
+
+## nmol T/g (dry) vs nmol T/individual egg (linear regression, spawners)
+``` {r}
+#| label: dry-vs-egg-thiamine-conc-spawn
+
+dryegg_spawn_fit <- lm(nmol_T_g_dw_corrected ~ nmol_T_egg, 
+                       data = egg_thiamine_dw_spawning)
+summary(dryegg_spawn_fit)
+
+dryegg_spawn_biplot <- ggplot(data = egg_thiamine_dw_spawning,
+                              aes(x = nmol_T_egg, y = nmol_T_g_dw_corrected)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,20))
+
+dryegg_spawn_biplot
+
+```
+
+
+## nmol T/g (wet) vs nmol T/individual egg (linear regression, overall)
+``` {r}
+#| label: wet-vs-egg-thiamine-conc
+
+wetegg_fit <- lm(nmol_T_g ~ nmol_T_egg, data = egg_thiamine)
+summary(wetegg_fit)
+
+wetegg_biplot <- ggplot(data = egg_thiamine, aes(x = nmol_T_egg, y = nmol_T_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,25))
+
+wetegg_biplot
+
+```
+
+## nmol T/g (wet) vs nmol T/individual egg (linear regression, spawners)
+``` {r}
+#| label: wet-vs-egg-thiamine-conc-spawn
+
+wetegg_spawn_fit <- lm(nmol_T_g ~ nmol_T_egg, data = egg_thiamine_spawning)
+summary(wetegg_spawn_fit)
+
+wetegg_spawn_biplot <- ggplot(data = egg_thiamine_spawning,
+                              aes(x = nmol_T_egg, y = nmol_T_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,10))
+
+wetegg_spawn_biplot
 
 ```
 
