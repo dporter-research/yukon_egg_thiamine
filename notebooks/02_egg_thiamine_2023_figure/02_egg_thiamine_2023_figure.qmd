@@ -428,12 +428,28 @@ summary(wetegg_spawn_fit)
 
 wetegg_spawn_biplot <- ggplot(data = egg_thiamine_spawning,
                               aes(x = nmol_T_egg, y = nmol_T_g)) +
-  geom_point() +
+  geom_point(aes(color = site), size = point_size) +
   geom_smooth(method = "lm") +
   scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
   scale_y_continuous(expand = c(0,0), limits = c(0,10))
 
 wetegg_spawn_biplot
+
+
+test_data <- egg_thiamine_spawning |> 
+  filter(site == "WH")
+
+test_data_spawn_fit <- lm(nmol_T_g ~ nmol_T_egg, data = test_data)
+summary(test_data_spawn_fit)
+
+test_data_spawn_biplot <- ggplot(data = test_data,
+                              aes(x = nmol_T_egg, y = nmol_T_g)) +
+  geom_point(aes(color = site), size = point_size) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(expand = c(0,0), limits = c(0,2.1)) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,10))
+
+test_data_spawn_biplot
 
 ```
 
