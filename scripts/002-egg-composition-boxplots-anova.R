@@ -82,6 +82,7 @@ p_egg_mass_site <- ggplot() +
   theme_bw()
 
 p_egg_mass_site
+
 #### ANOVA --------------------------------------------------------------------- 
 egg_mass_aov <- aov(g_egg ~ site, data = clean_2023_df_nochsal)
 summary.aov(egg_mass_aov) # significant, differences between sites exist
@@ -108,9 +109,12 @@ p_egg_mass_site +
 
 ### Eggs thiamine concentration decreasesas fish move up the river -------------
 #### Boxplot -------------------------------------------------------------------
-ggplot(data = clean_2023_df_nochsal, aes(x = site, y = nmol_T_g, fill = group)) +
-  geom_violin() +
-  geom_jitter(width = 0.2) +
+p_egg_thiamine_conc_site <- ggplot() +
+  geom_violin(data = clean_2023_df_nochsal, 
+              aes(x = site, y = nmol_T_g, fill = group)) +
+  geom_jitter(data = clean_2023_df_nochsal, 
+              aes(x = site, y = nmol_T_g), 
+              width = 0.2) +
   labs(
     x = "Site",
     y = "Egg Thiamine Concentration (nmol/g)",
@@ -118,9 +122,82 @@ ggplot(data = clean_2023_df_nochsal, aes(x = site, y = nmol_T_g, fill = group)) 
   ) +
   theme_bw()
 
+p_egg_thiamine_conc_site
+
 #### ANOVA --------------------------------------------------------------------- 
 egg_thiamine_conc_aov <- aov(nmol_T_g ~ site, data = clean_2023_df_nochsal)
 summary.aov(egg_thiamine_conc_aov) # significant, differences between sites exist
 
 #### Tukey ---------------------------------------------------------------------
-TukeyHSD(egg_thiamine_conc_aov) # WH > FOYU = RARA > PIST
+egg_thiamine_conc_Tukey <- TukeyHSD(egg_thiamine_conc_aov) # WH > FOYU = RARA > PIST
+egg_thiamine_conc_Tukey
+
+#### Generate comparison letters -----------------------------------------------
+cld_egg_thiamine_conc <- multcompLetters4(egg_thiamine_conc_aov, egg_thiamine_conc_Tukey)
+
+# Create df of letters and positions
+cld_egg_thiamine_conc_df <- as.data.frame.list(cld_egg_thiamine_conc$site) |> 
+  rownames_to_column(var = "site")
+
+# Get y-positions for labels
+egg_thiamine_conc_text_df <- clean_2023_df_nochsal |> 
+  group_by(site) |> 
+  summarise(y_pos = max(nmol_T_g) + 2) |> 
+  left_join(cld_egg_thiamine_conc_df)
+
+# Add letters to plot
+p_egg_thiamine_conc_site +
+  geom_text(data = egg_thiamine_conc_text_df, aes(x = site, y = y_pos, label = Letters))
+
+### Total egg thiamine per egg does not change as fish move up the river -------
+#### Boxplot -------------------------------------------------------------------
+p_egg_thiamine_total_site <- ggplot() +
+  geom_violin(data = clean_2023_df_nochsal, 
+              aes(x = site, y = nmol_T_egg, fill = group)) +
+  geom_jitter(data = clean_2023_df_nochsal, 
+              aes(x = site, y = nmol_T_egg), 
+              width = 0.2) +
+  labs(
+    x = "Site",
+    y = "Total Egg Thiamine (nmol/egg)",
+    title = "Total Egg Thiamine"
+  ) +
+  theme_bw()
+
+p_egg_thiamine_total_site
+
+#### ANOVA --------------------------------------------------------------------- 
+egg_thiamine_total_aov <- aov(nmol_T_egg ~ site, data = clean_2023_df_nochsal)
+summary.aov(egg_thiamine_total_aov) # no significant, differences between sites
+
+#### Tukey ---------------------------------------------------------------------
+egg_thiamine_total_Tukey <- TukeyHSD(egg_thiamine_total_aov) 
+egg_thiamine_total_Tukey
+
+#### Generate comparison letters -----------------------------------------------
+cld_egg_thiamine_total <- multcompLetters4(egg_thiamine_total_aov, egg_thiamine_total_Tukey)
+
+# Create df of letters and positions
+cld_egg_thiamine_total_df <- as.data.frame.list(cld_egg_thiamine_total$site) |> 
+  rownames_to_column(var = "site")
+
+# Get y-positions for labels
+egg_thiamine_total_text_df <- clean_2023_df_nochsal |> 
+  group_by(site) |> 
+  summarise(y_pos = max(nmol_T_egg) + 0.5) |> 
+  left_join(cld_egg_thiamine_total_df)
+
+# Add letters to plot
+p_egg_thiamine_total_site <- p_egg_thiamine_total_site +
+  geom_text(data = egg_thiamine_total_text_df, aes(x = site, y = y_pos, label = Letters))
+
+p_egg_thiamine_total_site
+
+#### Save plot -----------------------------------------------------------------
+ggsave(
+  filename = "output/figures/egg_thiamine_total_site.png", # The path and name of your final image
+  plot = p_egg_thiamine_total_site,                           # The plot object to save
+  width = 7,                                         # Set the width
+  height = 5,                                        # Set the height
+  dpi = 300                                          # Set the resolution (300 is good for publications)
+)
