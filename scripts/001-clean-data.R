@@ -43,5 +43,29 @@ pist_2023_genetics <- pist_2023_genetics |>
 clean_2023_df <- clean_2023_df |> 
   left_join(pist_2023_genetics, join_by(SIN == id))
 
+# Add fine_group designations for other reaches of the river
+# site == "WH", fine_group == "Canada"
+# site == "FOYU" | site == "RARA", fine_group == "Canada"
+# site == "Chena" | site == "Salcha", fine_group == "Tanana"
+clean_2023_df <- clean_2023_df |>
+  mutate(
+    fine_group = case_when(
+      # Combine the "Canada" rules
+      site %in% c("WH", "FOYU", "RARA") ~ "Canada",
+      
+      # The "Tanana" rule
+      site %in% c("Chena", "Salcha") ~ "Tanana",
+      
+      # For all other rows, keep the existing value
+      TRUE ~ fine_group
+    )
+  )
+
 # Write clean data
 write_rds(clean_2023_df, "data/processed/clean_2023_data.rds")
+
+# Write a clean copy of only Canada fish
+clean_2023_canada_df <- clean_2023_df |> 
+  filter(fine_group == "Canada")
+
+write_rds(clean_2023_canada_df, "data/processed/clean_2023_canada_data.rds")

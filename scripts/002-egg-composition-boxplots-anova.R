@@ -19,13 +19,54 @@ clean_2023_df_nochsal <- clean_2023_df |>
 ## Histogram visualizations ----------------------------------------------------
 
 # Visualize the distribution of egg weights at each site
-ggplot(data = clean_2023_df, aes(x = g_egg, y = site, fill = group)) +
+p_egg_mass_distribution <- ggplot(data = clean_2023_df, 
+                                  aes(x = g_egg, y = site, fill = group)) +
   geom_density_ridges(
     jittered_points = TRUE,
     position = "raincloud",
     alpha = 0.75
     ) +
+  labs(
+    x = "Average egg mass (g)",
+    y = "Site",
+    title = "Egg Mass Distribution"
+    ) +
   theme_bw()
+
+p_egg_mass_distribution 
+
+#ggsave(
+#  filename = "output/figures/egg_mass_distribution_site.png", 
+#  plot = p_egg_mass_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
+
+# Visualize the distribution of egg weights at each site no Chena, no Salcha
+p_egg_mass_distribution_nochalcha <- ggplot(data = clean_2023_df_nochsal, 
+                                           aes(x = g_egg, y = site, fill = group)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    position = "raincloud",
+    alpha = 0.75
+  ) +
+  labs(
+    x = "Average egg mass (g)",
+    y = "Site",
+    title = "Egg Mass Distribution, Chena and Salcha Removed"
+  ) +
+  theme_bw()
+
+p_egg_mass_distribution_nochalcha
+
+ggsave(
+  filename = "output/figures/egg_mass_distribution_site_nochalcha.png", 
+  plot = p_egg_mass_distribution_nochalcha,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 # Visualize the distribution of egg thiamine grams at each site
 ggplot(data = clean_2023_df, aes(x = nmol_T_egg, y = site, fill = group)) +
@@ -36,14 +77,6 @@ ggplot(data = clean_2023_df, aes(x = nmol_T_egg, y = site, fill = group)) +
   ) +
   theme_bw()
 
-# Visualize the distribution of egg weights at each site
-ggplot(data = clean_2023_df_nochsal, aes(x = g_egg, y = site, fill = group)) +
-  geom_density_ridges(
-    jittered_points = TRUE,
-    position = "raincloud",
-    alpha = 0.75
-  ) +
-  theme_bw()
 
 # Visualize the distribution of egg thiamine grams at each site
 ggplot(data = clean_2023_df_nochsal, aes(x = nmol_T_egg, y = site, fill = group)) +
@@ -194,10 +227,10 @@ p_egg_thiamine_total_site <- p_egg_thiamine_total_site +
 p_egg_thiamine_total_site
 
 #### Save plot -----------------------------------------------------------------
-ggsave(
-  filename = "output/figures/egg_thiamine_total_site.png", # The path and name of your final image
-  plot = p_egg_thiamine_total_site,                           # The plot object to save
-  width = 7,                                         # Set the width
-  height = 5,                                        # Set the height
-  dpi = 300                                          # Set the resolution (300 is good for publications)
-)
+#ggsave(
+#  filename = "output/figures/egg_thiamine_total_site.png", 
+#  plot = p_egg_thiamine_total_site,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)

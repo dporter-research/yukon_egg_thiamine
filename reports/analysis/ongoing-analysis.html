@@ -62,9 +62,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="total-thiamine-in-eggs-does-not-vary-by-site" class="level2">
-<h2 class="anchored" data-anchor-id="total-thiamine-in-eggs-does-not-vary-by-site">Total thiamine in eggs does not vary by site</h2>
-<p>To explore differences in total egg thiamine, we compared measurements across collection sites. The plot below visualizes these differences.</p>
+<section id="distribution-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="distribution-visualizations">Distribution Visualizations</h2>
+<section id="egg-mass-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="egg-mass-distributions">Egg mass distributions</h3>
+<p>First, I wanted to visualize the average egg mass distribution by collection site.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-distribution-site" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-distribution-site-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_mass_distribution_site.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-distribution-site-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Mean egg mass distribution for each collection site.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see a general increase in average egg size as the fish move up the river. Most sites have a generally normal distribution, Chena does not but there are only 3 fish. I decided to remove Chena and Salcha from downstream analyses. I can easily add them back in.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-egg-distribution-site-no-chalcha" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-distribution-site-no-chalcha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_mass_distribution_site_nochalcha.png" class="img-fluid figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-distribution-site-no-chalcha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Mean egg mass distribution for each collection site. Chena and Salcha are removed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-egg-thiamine-site" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -73,12 +104,13 @@ ul.task-list li input[type="checkbox"] {
 <img src="../../output/figures/egg_thiamine_total_site.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-thiamine-site-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Mean egg mass for each of the four primary collection sites. WH (Whitehorse) shows the highest mean egg mass.
+Figure&nbsp;3: Mean egg mass for each of the four primary collection sites. WH (Whitehorse) shows the highest mean egg mass.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+</section>
 </section>
 
 </main>

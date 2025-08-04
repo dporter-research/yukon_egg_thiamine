@@ -1,6 +1,8 @@
 ---
 title: "Yukon Egg Analysis Report"
 format: html
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -11,13 +13,35 @@ library(png)
 library(here)
 ```
 
-## Total thiamine in eggs does not vary by site
+## Distribution Visualizations
 
-To explore differences in total egg thiamine, we compared measurements across 
-collection sites. The plot below visualizes these differences.
+### Egg mass distributions
 
+First, I wanted to visualize the average egg mass distribution by collection
+site.
 
+```{r}
+#| label: fig-egg-distribution-site
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Mean egg mass distribution for each collection site."
 
+knitr::include_graphics("../../output/figures/egg_mass_distribution_site.png")
+```
+
+We can see a general increase in average egg size as the fish move up the river.
+Most sites have a generally normal distribution, Chena does not but there are
+only 3 fish. I decided to remove Chena and Salcha from downstream analyses. I 
+can easily add them back in.
+
+```{r}
+#| label: fig-egg-distribution-site-no-chalcha
+#| echo: false
+#| fig-cap: "Mean egg mass distribution for each collection site. Chena and Salcha are removed."
+
+knitr::include_graphics("../../output/figures/egg_mass_distribution_site_nochalcha.png")
+
+```
 
 ```{r}
 #| label: fig-egg-thiamine-site
