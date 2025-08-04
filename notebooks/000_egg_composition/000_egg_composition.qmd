@@ -1,0 +1,216 @@
+---
+title: "Analysis of Yukon River Chinook Salmon Egg Composition"
+author: "Your Name"
+date: last-modified
+format: 
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Show/Hide Code"
+editor_options: 
+  chunk_output_type: console
+---
+
+This report details the analysis of Chinook salmon egg composition from the Yukon River. We investigate how egg components like thiamine, lipids, and protein change with egg size and across different river migration groups.
+
+## 1. Setup
+
+This first step loads the required R packages and the dataset for the analysis.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+# Load all necessary packages
+library(tidyverse)
+library(here)      
+library(mgcv)      
+library(knitr)     # For creating nice tables
+
+# Load the raw data
+yukon_data <- read_rds(here("data", "yukon_egg_thiamine_2023.rds"))
+
+```
+
+## 2. Data Cleaning and Preparation
+
+Here, we clean the raw data by removing missing values and calculating several new variables related to egg composition.
+
+```{r}
+#| label: clean-data
+
+# Remove rows with missing values
+yukon_clean <- yukon_data |>
+  drop_na(nmol_T_g, g_egg, pct_moisture)
+
+# Calculate estimated protein and total mass of each component
+# Note: Protein is estimated by difference, a hypothesis to be confirmed.
+yukon_clean <- yukon_clean |>
+  mutate(
+    pct_dry_matter = 100 - pct_moisture,
+    pct_lipid_dry = (pct_lipid_wet / pct_dry_matter) * 100,
+    pct_protein_est_dry = 100 - pct_lipid_dry,
+    lipid_g = g_egg * (pct_lipid_wet / 100),
+    water_g = g_egg * (pct_moisture / 100),
+    protein_g_est = g_egg * (pct_dry_matter / 100) * (pct_protein_est_dry / 100)
+  )
+
+```
+
+## 3. Exploratory Analysis: Composition vs. Egg Size
+
+This section explores the non-linear relationships between egg size (g_egg) and key compositional variables.
+
+### Thiamine Concentration
+
+We investigate the "dilution effect" where thiamine concentration decreases in larger eggs.
+
+```{r}
+#| label: plot-thiamine-vs-size
+#| fig-cap: "Relationship between egg weight and thiamine concentration, showing a non-linear dilution effect."
+
+ggplot(yukon_clean, aes(x = g_egg, y = nmol_T_g)) +
+  geom_point(aes(color = site), alpha = 0.7) +
+  geom_smooth(method = "gam", formula = y ~ s(x), color = "black") +
+  labs(
+    title = "Egg Size vs. Thiamine Concentration",
+    x = "Egg Weight (g)",
+    y = "Thiamine Concentration (nmol/g)"
+  ) +
+  theme_bw()
+```
+
+```{r}
+#| label: model-thiamine-vs-size
+
+# Formally model the relationship
+gam_model <- gam(nmol_T_g ~ s(g_egg), data = yukon_clean)
+summary(gam_model)
+
+```
+
+Interpretation: The GAM summary shows a highly significant relationship ($p < 2\times 10^{-16}$). The effective degrees of freedom (EDF) of 2.34 confirms the relationship is non-linear. The model explains 46.6% of the variance in thiamine concentration, indicating a moderately strong relationship.
+
+### Lipid Content
+
+Here, we test the hypothesis that larger eggs have a different lipid concentration.
+
+```{r}
+#| label: plot-lipid-vs-size
+#| fig-cap: "Non-linear relationship between egg weight and wet lipid percentage."
+
+ggplot(yukon_clean, aes(x = g_egg, y = pct_lipid_wet)) +
+  geom_point(aes(color = site), alpha = 0.7) +
+  geom_smooth(method = "gam", formula = y ~ s(x), color = "black") +
+  labs(
+    title = "Egg Size vs. Lipid Content",
+    x = "Egg Weight (g)",
+    y = "Percent Lipid (Wet Weight)"
+  ) +
+  theme_bw()
+
+```
+
+```{r}
+#| label: model-lipid-vs-size
+
+gam_lipid <- gam(pct_lipid_wet ~ s(g_egg), data = yukon_clean)
+summary(gam_lipid)
+
+```
+
+Interpretation: This relationship is also highly significant ($p < 2 \times 10^{-16}$) and non-linear (EDF = 3.47). The model explains 45% of the variation in lipid percentage.
+
+### Estimated Protein Content
+
+Finally, we visualize the relationship between egg size and our estimated protein metric.
+
+```{r}
+#| label: plot-protein-vs-size
+#| fig-cap: "Relationship between egg weight and estimated protein percentage (dry weight)."
+
+ggplot(yukon_clean, aes(x = g_egg, y = pct_protein_est_dry)) +
+  geom_point(aes(color = site), alpha = 0.7) +
+  geom_smooth(method = "gam", formula = y ~ s(x), color = "black") +
+  labs(
+    title = "Egg Size vs. Estimated Protein Content",
+    x = "Egg Weight (g)",
+    y = "Estimated Protein % (Dry Weight)"
+  ) +
+  theme_bw()
+
+```
+
+## 4. Hypothesis Testing: Differences Across River Groups
+This section uses visualizations and formal statistical tests (ANOVA) to determine if egg properties differ significantly among the "Entry," "Transit," and "Spawning" migration groups.
+
+```{r}
+#| label: setup-anova
+
+# Ensure the 'group' variable is a factor for modeling
+yukon_clean$group <- as.factor(yukon_clean$group)
+
+```
+
+### Total Thiamine per Egg
+
+Hypothesis: The total amount of thiamine allocated to each egg is stable across migration groups, even if concentration changes.
+
+```{r}
+#| label: plot-thiamine-by-group
+#| fig-cap: "Total thiamine per egg appears stable across migration groups."
+
+ggplot(data = yukon_clean, aes(x = group, y = nmol_T_egg)) +
+  geom_boxplot(aes(fill = group), outlier.shape = NA, show.legend = FALSE) +
+  geom_jitter(width = 0.2, alpha = 0.6) +
+  labs(
+    title = "Total Thiamine per Egg by Group",
+    x = "Migration Group", y = "Total Thiamine (nmol/egg)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| label: anova-thiamine
+#| tbl-cap: "ANOVA results for total thiamine per egg by group."
+
+# A non-significant result (p > 0.05) is expected.
+anova_thiamine_egg <- aov(nmol_T_egg ~ group, data = yukon_clean)
+# Use kable() for a clean table output
+knitr::kable(anova_thiamine_egg |> broom::tidy())
+```
+
+Conclusion: The ANOVA result (p=0.271) is not significant. This supports our hypothesis that there is no statistical difference in the total amount of thiamine per egg between the migration groups.
+
+### Egg Weight
+
+Hypothesis: Egg weight increases as fish migrate upstream.
+
+```{r}
+#| label: plot-weight-by-group
+#| fig-cap: "Egg weight clearly increases across migration groups."
+
+ggplot(data = yukon_clean, aes(x = group, y = g_egg)) +
+  geom_boxplot(aes(fill = group), outlier.shape = NA, show.legend = FALSE) +
+  geom_jitter(width = 0.2, alpha = 0.6) +
+  labs(
+    title = "Egg Size Increases Across Groups",
+    x = "Migration Group", y = "Egg Weight (g)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| label: anova-weight
+#| tbl-cap: "ANOVA and Tukey HSD results for egg weight by group."
+
+anova_egg_weight <- aov(g_egg ~ group, data = yukon_clean)
+
+summary(anova_egg_weight)
+TukeyHSD(anova_egg_weight)
+knitr::kable(anova_egg_weight |> broom::tidy(), caption = "ANOVA Summary")
+knitr::kable(TukeyHSD(anova_egg_weight) |> broom::tidy(), caption = "Tukey HSD Post-Hoc Test")
+```
+
+Conclusion: The ANOVA result ($p < 2 \times 10^{-16}$) is highly significant. The Tukey HSD test confirms that the mean egg weight is significantly different between all pairs of groups, increasing from Entry to Transit to Spawning.
