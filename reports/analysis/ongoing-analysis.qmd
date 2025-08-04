@@ -1,0 +1,23 @@
+---
+title: "Yukon Egg Analysis Report"
+format: html
+---
+
+## Total thiamine in eggs does not vary by site
+
+To explore differences in total egg thiamine, we compared measurements across 
+collection sites. The plot below visualizes these differences.
+
+
+```{r}
+library(here)
+```
+
+```{r}
+#| label: fig-egg-thiamine-site
+#| echo: false
+#| fig-cap: "Mean egg mass for each of the four primary collection sites. WH (Whitehorse) shows the highest mean egg mass."
+
+# This function cleanly inserts your saved image
+knitr::include_graphics(here("output", "figures", "egg_thiamine_total_site.png"))
+```
