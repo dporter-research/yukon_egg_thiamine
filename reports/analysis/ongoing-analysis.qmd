@@ -1,5 +1,5 @@
 ---
-title: "Yukon Egg Analysis Report"
+title: "Yukon Egg Analysis"
 format: html
 editor_options: 
   chunk_output_type: console
