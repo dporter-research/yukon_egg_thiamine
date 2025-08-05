@@ -54,6 +54,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#average-egg-mass" id="toc-average-egg-mass" class="nav-link" data-scroll-target="#average-egg-mass">Average Egg Mass</a></li>
   <li><a href="#egg-thiamine-concentration" id="toc-egg-thiamine-concentration" class="nav-link" data-scroll-target="#egg-thiamine-concentration">Egg Thiamine Concentration</a></li>
   <li><a href="#egg-percent-moisture" id="toc-egg-percent-moisture" class="nav-link" data-scroll-target="#egg-percent-moisture">Egg Percent Moisture</a></li>
+  <li><a href="#egg-total-moisture" id="toc-egg-total-moisture" class="nav-link" data-scroll-target="#egg-total-moisture">Egg Total Moisture</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -118,6 +119,14 @@ Figure&nbsp;2: Mean egg mass distribution for each collection site. Chena and Sa
 <section id="canada-bound-fish" class="level2">
 <h2 class="anchored" data-anchor-id="canada-bound-fish">Canada-bound Fish</h2>
 <p>Here I have filtered to only include fish genetically identified as Canada-origin from the PIST group, I have also included fish collected at RARA, FOYU, and WH.</p>
+<p>Take home messages from the analyses below, as fish move upriver:</p>
+<ul>
+<li><p>Egg mass increases</p></li>
+<li><p>Egg thiamine concentration decreases</p></li>
+<li><p>Egg % moisture decreases, then increases</p></li>
+<li><p>Egg total moisture content increases</p></li>
+<li><p>how does this look</p></li>
+</ul>
 <section id="average-egg-mass" class="level3">
 <h3 class="anchored" data-anchor-id="average-egg-mass">Average Egg Mass</h3>
 <section id="distribution" class="level4">
@@ -205,12 +214,12 @@ Figure&nbsp;6: Egg thiamine concentrations at Canada-bound collection sites.
 <h4 class="anchored" data-anchor-id="distribution-2">Distribution</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-egg-pct_moisture-density-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<div id="fig-egg-pct-moisture-density-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-egg-pct_moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-egg-pct-moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../../output/figures/egg_pct_moisture_distribution_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-pct_moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-pct-moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7: Egg thiamine % moisture distributions at Canada-bound collection sites.
 </figcaption>
 </figure>
@@ -235,6 +244,44 @@ Figure&nbsp;8: Egg % moisture of Canada-bound fish.
 </div>
 </div>
 <p>Here, we are comparing group medians because the variance is homoscedastic, but the data are not normally distributed. Again we used a Kruskal-Wallis test and a post-hoc Dunn’s test.</p>
+</section>
+</section>
+<section id="egg-total-moisture" class="level3">
+<h3 class="anchored" data-anchor-id="egg-total-moisture">Egg Total Moisture</h3>
+<section id="distribution-3" class="level4">
+<h4 class="anchored" data-anchor-id="distribution-3">Distribution</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-total-moisture-density-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-total-moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_total_moisture_distribution_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-total-moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Egg thiamine total moisture content distributions at Canada-bound collection sites.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="violin-plot-3" class="level4">
+<h4 class="anchored" data-anchor-id="violin-plot-3">Violin Plot</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-total-moisture-violin-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-total-moisture-violin-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_total_moisture_site_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-total-moisture-violin-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Egg total moisture content of Canada-bound fish.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Again the data are not normally distributed, but we can see an increasing trend in total moisture content as the fish move up the river. The variance is homoscedastic so we are comparing the medians of the different groups.</p>
 </section>
 </section>
 </section>

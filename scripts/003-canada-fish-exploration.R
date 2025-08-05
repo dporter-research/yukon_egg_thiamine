@@ -281,9 +281,118 @@ p_egg_pct_moisture_site <- p_egg_pct_moisture_site +
 
 p_egg_pct_moisture_site
 
+#ggsave(
+#  filename = "output/figures/egg_pct_moisture_site_canada.png", 
+#  plot = p_egg_pct_moisture_site,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
+
+### Egg total moisture ---------------------------------------------------------
+
+#### Distribution --------------------------------------------------------------
+
+p_egg_total_moisture_distribution <- ggplot(data = canada_2023_df_moisture_trim, 
+                                          aes(x = water_g, y = site, fill = group)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    position = "raincloud",
+    alpha = 0.75
+  ) +
+  labs(
+    x = "Egg Total Moisture (g)",
+    y = "Site"
+  ) 
+
+p_egg_total_moisture_distribution 
+
+#ggsave(
+#  filename = "output/figures/egg_total_moisture_distribution_canada.png", 
+#  plot = p_egg_total_moisture_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
+
+#### Q-Q plot to check for normal distribution at each site --------------------
+
+p_egg_total_moisture_qq <- ggplot(data = canada_2023_df_moisture_trim,
+                                  aes(sample = water_g,
+                                      color = group)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~ site, scales = "free_y") +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  ) 
+
+p_egg_total_moisture_qq
+
+# Not normally distributed, using Kruskal-Wallis test
+
+#### Violin Plot ---------------------------------------------------------------
+
+p_egg_total_moisture_site <- ggplot() +
+  geom_violin(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = water_g, fill = group)) +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = water_g),
+              width = 0.2) +
+  labs(
+    x = "Site",
+    y = "Egg Total Moisture (g)"
+  )
+
+p_egg_total_moisture_site
+
+#### Homoscedasticity of Variance Test -----------------------------------------
+leveneTest(water_g ~ site, data = canada_2023_df_moisture_trim)
+
+# Passes the Levene Test (p > 0.05), so the variance is homoscedastic between groups
+
+#### Kruskal-Wallis ------------------------------------------------------------ 
+egg_total_moisture_kw <- kruskal.test(water_g ~ site,
+                                    data = canada_2023_df_moisture_trim)
+egg_total_moisture_kw 
+
+# significant differences between sites exist
+
+#### Dunn's Test ---------------------------------------------------------------
+egg_total_moisture_dunn <- dunn_test(data = canada_2023_df_moisture_trim,
+                                   formula = water_g ~ site,
+                                   p.adjust.method = "bonferroni") # WH > FOYU = RARA > PIST
+
+egg_total_moisture_dunn_formatted <- egg_total_moisture_dunn %>%
+  mutate(comparison = paste(group1, group2, sep = "-"))
+
+egg_total_moisture_dunn_formatted
+
+#### Generate comparison letters -----------------------------------------------
+cld_egg_total_moisture <- cldList(p.adj ~ comparison,
+                                data = egg_total_moisture_dunn_formatted,
+                                threshold = 0.05) 
+
+# Create df of letters and positions
+cld_egg_total_moisture_df <- cld_egg_total_moisture |> 
+  rename(site = Group)
+
+# Get y-positions for labels
+egg_total_moisture_text_df <- canada_2023_df_moisture_trim |> 
+  group_by(site) |> 
+  summarise(y_pos = max(water_g) + 0.025) |> 
+  left_join(cld_egg_total_moisture_df)
+
+# Add letters to plot
+p_egg_total_moisture_site <- p_egg_total_moisture_site +
+  geom_text(data = egg_total_moisture_text_df, aes(x = site, y = y_pos, label = Letter))
+
+p_egg_total_moisture_site
+
 ggsave(
-  filename = "output/figures/egg_pct_moisture_site_canada.png", 
-  plot = p_egg_pct_moisture_site,                         
+  filename = "output/figures/egg_total_moisture_site_canada.png", 
+  plot = p_egg_total_moisture_site,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        

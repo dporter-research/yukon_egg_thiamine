@@ -4,6 +4,9 @@ format: html
 editor_options: 
   chunk_output_type: console
 toc: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r}
@@ -18,8 +21,8 @@ library(here)
 
 ### Egg mass distributions
 
-First, I wanted to visualize the average egg mass distribution by collection
-site.
+First, I wanted to visualize the average egg mass distribution by
+collection site.
 
 ```{r}
 #| label: fig-egg-distribution-site
@@ -30,10 +33,10 @@ site.
 knitr::include_graphics("../../output/figures/egg_mass_distribution_site.png")
 ```
 
-We can see a general increase in average egg size as the fish move up the river.
-Most sites have a generally normal distribution, Chena does not but there are
-only 3 fish. I decided to remove Chena and Salcha from downstream analyses. I 
-can easily add them back in.
+We can see a general increase in average egg size as the fish move up
+the river. Most sites have a generally normal distribution, Chena does
+not but there are only 3 fish. I decided to remove Chena and Salcha from
+downstream analyses. I can easily add them back in.
 
 ```{r}
 #| label: fig-egg-distribution-site-no-chalcha
@@ -44,10 +47,18 @@ knitr::include_graphics("../../output/figures/egg_mass_distribution_site_nochalc
 
 ```
 
-## Canada-bound Fish 
+## Canada-bound Fish
 
-Here I have filtered to only include fish genetically identified as Canada-origin
-from the PIST group, I have also included fish collected at RARA, FOYU, and WH.
+Here I have filtered to only include fish genetically identified as
+Canada-origin from the PIST group, I have also included fish collected
+at RARA, FOYU, and WH.
+
+Take home messages from the analyses below, as fish move upriver: 
+
+- Egg mass increases 
+- Egg thiamine concentration decreases 
+- Egg % moisture decreases, then increases 
+- Egg total moisture content increases
 
 ### Average Egg Mass
 
@@ -62,8 +73,8 @@ from the PIST group, I have also included fish collected at RARA, FOYU, and WH.
 knitr::include_graphics("../../output/figures/egg_mass_distribution_canada.png")
 ```
 
-The average egg mass distribution is largely unchanged when non-Canada-bound
-fish are filtered out.
+The average egg mass distribution is largely unchanged when
+non-Canada-bound fish are filtered out.
 
 #### Violin Plot
 
@@ -77,20 +88,20 @@ knitr::include_graphics("../../output/figures/egg_mass_site_canada.png")
 
 ```
 
-Average egg mass is significantly different at each site along the river. Eggs
-are getting larger as the fish proceed towards Whitehorse.
+Average egg mass is significantly different at each site along the
+river. Eggs are getting larger as the fish proceed towards Whitehorse.
 
-These data meet the assumptions of an ANOVA test. The data are mostly normally
-distributed, there is homoscedasticity of variance (Levene's test p > 0.05),
-and the observations are independent of each other. The observations are
-independent because we are only looking at Canada-bound fish, if we were looking
-at fish assigned to different "stocks" we would need to account for the random
-effect of "stock".
+These data meet the assumptions of an ANOVA test. The data are mostly
+normally distributed, there is homoscedasticity of variance (Levene's
+test p \> 0.05), and the observations are independent of each other. The
+observations are independent because we are only looking at Canada-bound
+fish, if we were looking at fish assigned to different "stocks" we would
+need to account for the random effect of "stock".
 
-We aren't 100% sure all the fish from RARA and FOYU are Canada "stock" we need
-to be sure of this.
+We aren't 100% sure all the fish from RARA and FOYU are Canada "stock"
+we need to be sure of this.
 
-### Egg Thiamine Concentration 
+### Egg Thiamine Concentration
 
 #### Distribution
 
@@ -104,8 +115,8 @@ knitr::include_graphics("../../output/figures/egg_thiamine_concentration_distrib
 
 ```
 
-Distributions become more normal as fish migrate upriver and egg thiamine
-concentration drops.
+Distributions become more normal as fish migrate upriver and egg
+thiamine concentration drops.
 
 #### Violin Plot
 
@@ -119,23 +130,24 @@ knitr::include_graphics("../../output/figures/egg_thiamine_conc_site_canada.png"
 
 ```
 
-Egg thiamine concentration decreases as fish migrate up the river. Fort Yukon is
-not significantly different from Whitehorse.
+Egg thiamine concentration decreases as fish migrate up the river. Fort
+Yukon is not significantly different from Whitehorse.
 
-Data are not normally distributed in each group and variance is not homoscedastic,
-so ANOVA could not be used. Instead I tested the difference between groups 
-using the non-parametric Kruskal-Wallis test and used a post-hoc Dunn's test
-with Bonferroni adjustment. The Kruskal-Wallis test compares the group medians
-(mean ranks) rather than the means like an ANOVA. Because the variance of 
-each group is not homoscedastic, all we can confidently say is that the distributions
-of the different groupings are different.
+Data are not normally distributed in each group and variance is not
+homoscedastic, so ANOVA could not be used. Instead I tested the
+difference between groups using the non-parametric Kruskal-Wallis test
+and used a post-hoc Dunn's test with Bonferroni adjustment. The
+Kruskal-Wallis test compares the group medians (mean ranks) rather than
+the means like an ANOVA. Because the variance of each group is not
+homoscedastic, all we can confidently say is that the distributions of
+the different groupings are different.
 
 ### Egg Percent Moisture
 
 #### Distribution
 
 ```{r}
-#| label: fig-egg-pct_moisture-density-canada
+#| label: fig-egg-pct-moisture-density-canada
 #| echo: false
 #| fig-align: center
 #| fig-cap: "Egg thiamine % moisture distributions at Canada-bound collection sites."
@@ -156,7 +168,37 @@ knitr::include_graphics("../../output/figures/egg_pct_moisture_site_canada.png")
 
 ```
 
-Here, we are comparing group medians because the variance is homoscedastic, but
-the data are not normally distributed. Again we used a Kruskal-Wallis test and
-a post-hoc Dunn's test.
+Here, we are comparing group medians because the variance is
+homoscedastic, but the data are not normally distributed. Again we used
+a Kruskal-Wallis test and a post-hoc Dunn's test.
 
+### Egg Total Moisture
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-total-moisture-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg thiamine total moisture content distributions at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_total_moisture_distribution_canada.png")
+
+```
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-total-moisture-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg total moisture content of Canada-bound fish."
+
+knitr::include_graphics("../../output/figures/egg_total_moisture_site_canada.png")
+
+```
+
+Again the data are not normally distributed, but we can see an
+increasing trend in total moisture content as the fish move up the
+river. The variance is homoscedastic so we are comparing the medians of
+the different groups.
