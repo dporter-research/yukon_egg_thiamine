@@ -1,6 +1,5 @@
 library(tidyverse)
 library(ggridges)
-library(ggpubr)
 library(multcompView)
 library(rstatix)
 library(tibble)

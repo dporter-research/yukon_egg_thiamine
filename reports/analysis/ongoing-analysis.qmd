@@ -3,6 +3,7 @@ title: "Yukon Egg Analysis Report"
 format: html
 editor_options: 
   chunk_output_type: console
+toc: true
 ---
 
 ```{r}
@@ -52,3 +53,47 @@ knitr::include_graphics("../../output/figures/egg_mass_distribution_site_nochalc
 # This function cleanly inserts your saved image
 knitr::include_graphics("../../output/figures/egg_thiamine_total_site.png")
 ```
+
+
+## Canada-bound Fish 
+
+Here I have filtered to only include fish genetically identified as Canada-origin
+from the PIST group, I have also included fish collected at RARA, FOYU, and WH.
+
+```{r}
+#| label: fig-egg-distribution-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Mean egg mass distribution for each Canada-bound collection site."
+
+knitr::include_graphics("../../output/figures/egg_mass_distribution_canada.png")
+```
+
+The average egg mass distribution is largely unchanged when non-Canada-bound
+fish are filtered out.
+
+```{r}
+#| label: fig-egg-mass-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Average egg mass at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_mass_site_canada.png")
+
+```
+
+Average egg mass is significantly different at each site along the river. Eggs
+are getting larger as the fish proceed towards Whitehorse.
+
+```{r}
+#| label: fig-egg-thiamine-conc-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg thiamine concentrations at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_thiamine_conc_site_canada.png")
+
+```
+
+Egg thiamine concentration decreases as fish migrate up the river. Fort Yukon is
+not significantly different from Rampart Rapids or Whitehorse.
