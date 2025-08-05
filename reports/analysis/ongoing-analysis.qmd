@@ -44,21 +44,14 @@ knitr::include_graphics("../../output/figures/egg_mass_distribution_site_nochalc
 
 ```
 
-```{r}
-#| label: fig-egg-thiamine-site
-#| echo: false
-#| fig-align: center
-#| fig-cap: "Mean egg mass for each of the four primary collection sites. WH (Whitehorse) shows the highest mean egg mass."
-
-# This function cleanly inserts your saved image
-knitr::include_graphics("../../output/figures/egg_thiamine_total_site.png")
-```
-
-
 ## Canada-bound Fish 
 
 Here I have filtered to only include fish genetically identified as Canada-origin
 from the PIST group, I have also included fish collected at RARA, FOYU, and WH.
+
+### Average Egg Mass
+
+#### Distribution
 
 ```{r}
 #| label: fig-egg-distribution-canada
@@ -71,6 +64,8 @@ knitr::include_graphics("../../output/figures/egg_mass_distribution_canada.png")
 
 The average egg mass distribution is largely unchanged when non-Canada-bound
 fish are filtered out.
+
+#### Violin Plot
 
 ```{r}
 #| label: fig-egg-mass-violin-canada
@@ -85,6 +80,35 @@ knitr::include_graphics("../../output/figures/egg_mass_site_canada.png")
 Average egg mass is significantly different at each site along the river. Eggs
 are getting larger as the fish proceed towards Whitehorse.
 
+These data meet the assumptions of an ANOVA test. The data are mostly normally
+distributed, there is homoscedasticity of variance (Levene's test p > 0.05),
+and the observations are independent of each other. The observations are
+independent because we are only looking at Canada-bound fish, if we were looking
+at fish assigned to different "stocks" we would need to account for the random
+effect of "stock".
+
+We aren't 100% sure all the fish from RARA and FOYU are Canada "stock" we need
+to be sure of this.
+
+### Egg Thiamine Concentration 
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-thiamine-conc-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg thiamine concentration distributions at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_thiamine_concentration_distribution_canada.png")
+
+```
+
+Distributions become more normal as fish migrate upriver and egg thiamine
+concentration drops.
+
+#### Violin Plot
+
 ```{r}
 #| label: fig-egg-thiamine-conc-violin-canada
 #| echo: false
@@ -96,4 +120,43 @@ knitr::include_graphics("../../output/figures/egg_thiamine_conc_site_canada.png"
 ```
 
 Egg thiamine concentration decreases as fish migrate up the river. Fort Yukon is
-not significantly different from Rampart Rapids or Whitehorse.
+not significantly different from Whitehorse.
+
+Data are not normally distributed in each group and variance is not homoscedastic,
+so ANOVA could not be used. Instead I tested the difference between groups 
+using the non-parametric Kruskal-Wallis test and used a post-hoc Dunn's test
+with Bonferroni adjustment. The Kruskal-Wallis test compares the group medians
+(mean ranks) rather than the means like an ANOVA. Because the variance of 
+each group is not homoscedastic, all we can confidently say is that the distributions
+of the different groupings are different.
+
+### Egg Percent Moisture
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-pct_moisture-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg thiamine % moisture distributions at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_pct_moisture_distribution_canada.png")
+
+```
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-pct-moisture-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg % moisture of Canada-bound fish."
+
+knitr::include_graphics("../../output/figures/egg_pct_moisture_site_canada.png")
+
+```
+
+Here, we are comparing group medians because the variance is homoscedastic, but
+the data are not normally distributed. Again we used a Kruskal-Wallis test and
+a post-hoc Dunn's test.
+

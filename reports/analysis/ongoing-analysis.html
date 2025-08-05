@@ -49,7 +49,12 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#egg-mass-distributions" id="toc-egg-mass-distributions" class="nav-link" data-scroll-target="#egg-mass-distributions">Egg mass distributions</a></li>
   </ul></li>
-  <li><a href="#canada-bound-fish" id="toc-canada-bound-fish" class="nav-link" data-scroll-target="#canada-bound-fish">Canada-bound Fish</a></li>
+  <li><a href="#canada-bound-fish" id="toc-canada-bound-fish" class="nav-link" data-scroll-target="#canada-bound-fish">Canada-bound Fish</a>
+  <ul class="collapse">
+  <li><a href="#average-egg-mass" id="toc-average-egg-mass" class="nav-link" data-scroll-target="#average-egg-mass">Average Egg Mass</a></li>
+  <li><a href="#egg-thiamine-concentration" id="toc-egg-thiamine-concentration" class="nav-link" data-scroll-target="#egg-thiamine-concentration">Egg Thiamine Concentration</a></li>
+  <li><a href="#egg-percent-moisture" id="toc-egg-percent-moisture" class="nav-link" data-scroll-target="#egg-percent-moisture">Egg Percent Moisture</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -108,25 +113,15 @@ Figure&nbsp;2: Mean egg mass distribution for each collection site. Chena and Sa
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div id="fig-egg-thiamine-site" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-egg-thiamine-site-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../output/figures/egg_thiamine_total_site.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-thiamine-site-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Mean egg mass for each of the four primary collection sites. WH (Whitehorse) shows the highest mean egg mass.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="canada-bound-fish" class="level2">
 <h2 class="anchored" data-anchor-id="canada-bound-fish">Canada-bound Fish</h2>
 <p>Here I have filtered to only include fish genetically identified as Canada-origin from the PIST group, I have also included fish collected at RARA, FOYU, and WH.</p>
+<section id="average-egg-mass" class="level3">
+<h3 class="anchored" data-anchor-id="average-egg-mass">Average Egg Mass</h3>
+<section id="distribution" class="level4">
+<h4 class="anchored" data-anchor-id="distribution">Distribution</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-egg-distribution-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -135,13 +130,16 @@ Figure&nbsp;3: Mean egg mass for each of the four primary collection sites. WH (
 <img src="../../output/figures/egg_mass_distribution_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-distribution-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Mean egg mass distribution for each Canada-bound collection site.
+Figure&nbsp;3: Mean egg mass distribution for each Canada-bound collection site.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The average egg mass distribution is largely unchanged when non-Canada-bound fish are filtered out.</p>
+</section>
+<section id="violin-plot" class="level4">
+<h4 class="anchored" data-anchor-id="violin-plot">Violin Plot</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-egg-mass-violin-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -150,13 +148,39 @@ Figure&nbsp;4: Mean egg mass distribution for each Canada-bound collection site.
 <img src="../../output/figures/egg_mass_site_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-mass-violin-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Average egg mass at Canada-bound collection sites.
+Figure&nbsp;4: Average egg mass at Canada-bound collection sites.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Average egg mass is significantly different at each site along the river. Eggs are getting larger as the fish proceed towards Whitehorse.</p>
+<p>These data meet the assumptions of an ANOVA test. The data are mostly normally distributed, there is homoscedasticity of variance (Levene’s test p &gt; 0.05), and the observations are independent of each other. The observations are independent because we are only looking at Canada-bound fish, if we were looking at fish assigned to different “stocks” we would need to account for the random effect of “stock”.</p>
+<p>We aren’t 100% sure all the fish from RARA and FOYU are Canada “stock” we need to be sure of this.</p>
+</section>
+</section>
+<section id="egg-thiamine-concentration" class="level3">
+<h3 class="anchored" data-anchor-id="egg-thiamine-concentration">Egg Thiamine Concentration</h3>
+<section id="distribution-1" class="level4">
+<h4 class="anchored" data-anchor-id="distribution-1">Distribution</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-thiamine-conc-density-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-thiamine-conc-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_thiamine_concentration_distribution_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-thiamine-conc-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Egg thiamine concentration distributions at Canada-bound collection sites.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Distributions become more normal as fish migrate upriver and egg thiamine concentration drops.</p>
+</section>
+<section id="violin-plot-1" class="level4">
+<h4 class="anchored" data-anchor-id="violin-plot-1">Violin Plot</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-egg-thiamine-conc-violin-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -171,7 +195,48 @@ Figure&nbsp;6: Egg thiamine concentrations at Canada-bound collection sites.
 </div>
 </div>
 </div>
-<p>Egg thiamine concentration decreases as fish migrate up the river. Fort Yukon is not significantly different from Rampart Rapids or Whitehorse.</p>
+<p>Egg thiamine concentration decreases as fish migrate up the river. Fort Yukon is not significantly different from Whitehorse.</p>
+<p>Data are not normally distributed in each group and variance is not homoscedastic, so ANOVA could not be used. Instead I tested the difference between groups using the non-parametric Kruskal-Wallis test and used a post-hoc Dunn’s test with Bonferroni adjustment. The Kruskal-Wallis test compares the group medians (mean ranks) rather than the means like an ANOVA. Because the variance of each group is not homoscedastic, all we can confidently say is that the distributions of the different groupings are different.</p>
+</section>
+</section>
+<section id="egg-percent-moisture" class="level3">
+<h3 class="anchored" data-anchor-id="egg-percent-moisture">Egg Percent Moisture</h3>
+<section id="distribution-2" class="level4">
+<h4 class="anchored" data-anchor-id="distribution-2">Distribution</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-pct_moisture-density-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-pct_moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_pct_moisture_distribution_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-pct_moisture-density-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Egg thiamine % moisture distributions at Canada-bound collection sites.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="violin-plot-2" class="level4">
+<h4 class="anchored" data-anchor-id="violin-plot-2">Violin Plot</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-egg-pct-moisture-violin-canada" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-egg-pct-moisture-violin-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../output/figures/egg_pct_moisture_site_canada.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1050">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-egg-pct-moisture-violin-canada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Egg % moisture of Canada-bound fish.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, we are comparing group medians because the variance is homoscedastic, but the data are not normally distributed. Again we used a Kruskal-Wallis test and a post-hoc Dunn’s test.</p>
+</section>
+</section>
 </section>
 
 </main>
