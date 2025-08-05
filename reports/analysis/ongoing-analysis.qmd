@@ -47,7 +47,7 @@ knitr::include_graphics("../../output/figures/egg_mass_distribution_site_nochalc
 
 ```
 
-## Canada-bound Fish
+## Canada-bound fish (2023)
 
 Here I have filtered to only include fish genetically identified as
 Canada-origin from the PIST group, I have also included fish collected
@@ -59,6 +59,8 @@ Take home messages from the analyses below, as fish move upriver:
 - Egg thiamine concentration decreases 
 - Egg % moisture decreases, then increases 
 - Egg total moisture content increases
+- Egg % lipid (dry) decreases
+- Egg total lipid increases from PIST
 
 ### Average Egg Mass
 
@@ -150,7 +152,7 @@ the different groupings are different.
 #| label: fig-egg-pct-moisture-density-canada
 #| echo: false
 #| fig-align: center
-#| fig-cap: "Egg thiamine % moisture distributions at Canada-bound collection sites."
+#| fig-cap: "Egg % moisture distributions at Canada-bound collection sites."
 
 knitr::include_graphics("../../output/figures/egg_pct_moisture_distribution_canada.png")
 
@@ -180,7 +182,7 @@ a Kruskal-Wallis test and a post-hoc Dunn's test.
 #| label: fig-egg-total-moisture-density-canada
 #| echo: false
 #| fig-align: center
-#| fig-cap: "Egg thiamine total moisture content distributions at Canada-bound collection sites."
+#| fig-cap: "Egg total moisture content distributions at Canada-bound collection sites."
 
 knitr::include_graphics("../../output/figures/egg_total_moisture_distribution_canada.png")
 
@@ -202,3 +204,64 @@ Again the data are not normally distributed, but we can see an
 increasing trend in total moisture content as the fish move up the
 river. The variance is homoscedastic so we are comparing the medians of
 the different groups.
+
+### Egg % Lipid (dry)
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-pct-lipid-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg % lipid (dry) distributions at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_pct_lipid_distribution_canada.png")
+
+```
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-pct-lipid-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg % lipid (dry) of Canada-bound fish."
+
+knitr::include_graphics("../../output/figures/egg_pct_lipid_site_canada.png")
+
+```
+
+Egg percent lipid (dry) decreases as fish move upriver. Not normally distributed, variance is homoscedastic (Kruskal-Wallis tests differences of medians).
+
+### Egg Total Lipid Content
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-total-lipid-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg total lipid contentdistributions at Canada-bound collection sites."
+
+knitr::include_graphics("../../output/figures/egg_total_lipid_distribution_canada.png")
+
+```
+
+Data pass tests for normality and homoscedasticity, 
+testing differences of means with ANOVA.
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-total-lipid-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg total lipid content of Canada-bound fish."
+
+knitr::include_graphics("../../output/figures/egg_total_lipid_site_canada.png")
+
+```
+
+Lipid content increases from PIST, but all other sites are do not have
+significantly different mean lipid content values.
+
