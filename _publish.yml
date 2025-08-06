@@ -1,0 +1,4 @@
+- source: ongoing-analysis.qmd
+  quarto-pub:
+    - id: 2afae03c-ddda-48df-a393-b31879592903
+      url: 'https://dporter.quarto.pub/yukon-egg-analysis-d35f'

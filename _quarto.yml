@@ -1,0 +1,9 @@
+project:
+  type: default
+
+format:
+  html:
+    self-contained: true
+
+resources:
+  - "output/figures/*.png"
