@@ -376,6 +376,41 @@ knitr::include_graphics("output/figures/egg_total_protein_site_canada.png")
 
 Total egg protein content estimates increase along the river.
 
+# 2023 PIST Eggs by Genetic Group
+
+The table below summarizes the number of individuals assigned to each genetic
+group at each grouping level.
+
+```{r}
+#| label: PIST-genetic-counts
+#| echo: false
+
+genetic_counts_table <- readRDS("output/tables/PIST_genetic_group_counts.rds")
+
+knitr::kable(
+  genetic_counts_table,
+  col.names = c("Grouping Level", "Group Name", "n"),
+  caption = "Number of individuals assigned to each genetic grouping."
+)
+
+```
+
+I want to start exploration at the "broad_group" level. It seems like it gives
+us good sample sizes at 3 group levels to explore.
+
+
+## Density Distributions
+
+```{r}
+#| label: fig-PIST-facetted-density
+#| echo: false
+#| fig-align: center
+
+knitr::include_graphics("output/figures/PIST_facetted_densities.png")
+
+```
+
+
 
 # Under construction from here down
 ## Distribution Visualizations
