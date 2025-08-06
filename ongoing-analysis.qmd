@@ -34,11 +34,6 @@ knitr::include_graphics("output/figures/egg_mass_distribution_site.png")
 
 ```
 
-
-::: {#fig-egg-distribution-site fig-cap="Mean egg mass distribution…" fig-align="center"}
-![](output/figures/egg_mass_distribution_site.png)
-:::
-
 We can see a general increase in average egg size as the fish move up
 the river. Most sites have a generally normal distribution, Chena does
 not but there are only 3 fish. I decided to remove Chena and Salcha from
