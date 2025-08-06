@@ -61,7 +61,9 @@ Take home messages from the analyses below, as fish move upriver:
 - Egg % moisture decreases, then increases 
 - Egg total moisture content increases
 - Egg % lipid (dry) decreases
-- Egg total lipid increases from PIST
+- Egg total lipid content increases from PIST
+- Egg % protein (dry) estimate increases
+- Egg protein content (estimated) 
 
 ### Average Egg Mass
 
@@ -242,7 +244,7 @@ Egg percent lipid (dry) decreases as fish move upriver. Not normally distributed
 #| label: fig-egg-total-lipid-density-canada
 #| echo: false
 #| fig-align: center
-#| fig-cap: "Egg total lipid contentdistributions at Canada-bound collection sites."
+#| fig-cap: "Egg total lipid content distributions at Canada-bound collection sites."
 
 knitr::include_graphics("output/figures/egg_total_lipid_distribution_canada.png")
 
@@ -266,3 +268,33 @@ knitr::include_graphics("output/figures/egg_total_lipid_site_canada.png")
 Lipid content increases from PIST, but all other sites are do not have
 significantly different mean lipid content values.
 
+### Egg % Protein Estimate (dry)
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-pct-protein-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg % protein estimate (dry) distributions at Canada-bound collection sites."
+
+knitr::include_graphics("output/figures/egg_pct_protein_distribution_canada.png")
+
+```
+
+Data fail test for normality (FOYU and WH) but pass for homoscedasticity, 
+testing differences of medians with Kruskal-Wallis.
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-pct-protein-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg % protein estimates (dry) of Canada-bound fish."
+
+knitr::include_graphics("output/figures/egg_pct_protein_site_canada.png")
+
+```
+
+Percent protein (dry) estimates increase along the river.

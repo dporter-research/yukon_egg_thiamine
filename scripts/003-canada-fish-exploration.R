@@ -616,3 +616,113 @@ p_egg_total_lipid_site
 #  dpi = 300                                        
 #)
 
+### Egg % protein dry (estimate) -----------------------------------------------
+
+#### Distribution --------------------------------------------------------------
+
+p_egg_pct_protein_distribution <- ggplot(data = canada_2023_df_moisture_trim, 
+                                       aes(x = pct_protein_est_dry, y = site, fill = group)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    position = "raincloud",
+    alpha = 0.75
+  ) +
+  labs(
+    x = "Egg % Protein Estimate (dry)",
+    y = "Site"
+  ) 
+
+p_egg_pct_protein_distribution 
+
+#ggsave(                      
+#  filename = "output/figures/egg_pct_protein_distribution_canada.png", 
+#  plot = p_egg_pct_protein_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
+
+#### Q-Q plot to check for normal distribution at each site --------------------
+
+p_egg_pct_protein_qq <- ggplot(data = canada_2023_df_moisture_trim,
+                             aes(sample = pct_protein_est_dry,
+                                 color = group)) +
+  stat_qq_band(fill = NA) +
+  stat_qq_line() +
+  stat_qq_point() +
+  facet_wrap(~ site, scales = "free_y") +
+  facet_wrap(~ site, scales = "free_y") +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  ) 
+
+p_egg_pct_protein_qq
+
+# Not normally distributed, using Kruskal-Wallis test
+
+#### Violin Plot ---------------------------------------------------------------
+
+p_egg_pct_protein_site <- ggplot() +
+  geom_violin(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_protein_est_dry, fill = group)) +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_protein_est_dry),
+              width = 0.2) +
+  labs(
+    x = "Site",
+    y = "Egg % Protein Estimate (dry)"
+  )
+
+p_egg_pct_protein_site
+
+#### Homoscedasticity of Variance Test -----------------------------------------
+leveneTest(pct_protein_est_dry ~ site, data = canada_2023_df_moisture_trim)
+
+# Passes the Levene Test (p > 0.05), so the variance is homoscedastic between groups
+
+#### Kruskal-Wallis ------------------------------------------------------------ 
+egg_pct_protein_kw <- kruskal.test(pct_protein_est_dry ~ site,
+                                 data = canada_2023_df_moisture_trim)
+egg_pct_protein_kw 
+
+# significant differences between sites exist
+
+#### Dunn's Test ---------------------------------------------------------------
+egg_pct_protein_dunn <- dunn_test(data = canada_2023_df_moisture_trim,
+                                formula = pct_protein_est_dry ~ site,
+                                p.adjust.method = "bonferroni") 
+
+egg_pct_protein_dunn_formatted <- egg_pct_protein_dunn %>%
+  mutate(comparison = paste(group1, group2, sep = "-"))
+
+egg_pct_protein_dunn_formatted
+
+#### Generate comparison letters -----------------------------------------------
+cld_egg_pct_protein <- cldList(p.adj ~ comparison,
+                             data = egg_pct_protein_dunn_formatted,
+                             threshold = 0.05) 
+
+# Create df of letters and positions
+cld_egg_pct_protein_df <- cld_egg_pct_protein |> 
+  rename(site = Group)
+
+# Get y-positions for labels
+egg_pct_protein_text_df <- canada_2023_df_moisture_trim |> 
+  group_by(site) |> 
+  summarise(y_pos = max(pct_protein_est_dry) + 0.025) |> 
+  left_join(cld_egg_pct_protein_df)
+
+# Add letters to plot
+p_egg_pct_protein_site <- p_egg_pct_protein_site +
+  geom_text(data = egg_pct_protein_text_df, aes(x = site, y = y_pos, label = Letter))
+
+p_egg_pct_protein_site
+
+ggsave(
+  filename = "output/figures/egg_pct_protein_site_canada.png", 
+  plot = p_egg_pct_protein_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
