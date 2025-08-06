@@ -63,7 +63,7 @@ Take home messages from the analyses below, as fish move upriver:
 - Egg % lipid (dry) decreases
 - Egg total lipid content increases from PIST
 - Egg % protein (dry) estimate increases
-- Egg protein content (estimated) 
+- Egg protein content (estimated) increases 
 
 ### Average Egg Mass
 
@@ -298,3 +298,34 @@ knitr::include_graphics("output/figures/egg_pct_protein_site_canada.png")
 ```
 
 Percent protein (dry) estimates increase along the river.
+
+### Egg Total Protein Estimate
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-total-protein-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg total protein estimate (g) distributions at Canada-bound collection sites."
+
+knitr::include_graphics("output/figures/egg_total_protein_distribution_canada.png")
+
+```
+
+Data fail test for normality but pass for homoscedasticity, 
+testing differences of medians with Kruskal-Wallis.
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-total-protein-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Egg total protein estimates (g) of Canada-bound fish."
+
+knitr::include_graphics("output/figures/egg_total_protein_site_canada.png")
+
+```
+
+Total egg protein content estimates increase along the river.
