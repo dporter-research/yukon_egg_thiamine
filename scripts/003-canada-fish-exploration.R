@@ -6,6 +6,13 @@ library(tibble)
 library(car)
 library(rcompanion)
 library(qqplotr)
+library(colorspace)
+
+color_palette <- c("#1F77B4FF", "#FF7F0EFF", "#2CA02CFF", "#D62728FF", "#9467BDFF",
+                   "#8C564BFF", "#E377C2FF", "#7F7F7FFF", "#BCBD22FF", "#17BECFFF")
+
+options(ggplot2.discrete.colour = color_palette)
+options(ggplot2.discrete.fill = color_palette)
 
 # Set ggplot theme to bw
 theme_set(theme_bw())
@@ -40,13 +47,13 @@ p_egg_mass_distribution <- ggplot(data = canada_2023_df_egg_mass_trim,
 
 p_egg_mass_distribution 
 
-#ggsave(
-#  filename = "output/figures/egg_mass_distribution_canada.png", 
-#  plot = p_egg_mass_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_mass_distribution_canada.png", 
+  plot = p_egg_mass_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 #### Boxplot -------------------------------------------------------------------
 p_egg_mass_site <- ggplot() +
@@ -94,13 +101,13 @@ p_egg_mass_site <- p_egg_mass_site +
 
 p_egg_mass_site
 
-#ggsave(
-#  filename = "output/figures/egg_mass_site_canada.png", 
-#  plot = p_egg_mass_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_mass_site_canada.png", 
+  plot = p_egg_mass_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 ### Egg Thiamine Concentration -------------------------------------------------
 
@@ -188,14 +195,13 @@ p_egg_thiamine_conc_site <- p_egg_thiamine_conc_site +
 
 p_egg_thiamine_conc_site
 
-#ggsave(
-#  filename = "output/figures/egg_thiamine_conc_site_canada.png", 
-#  plot = p_egg_thiamine_conc_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
-
+ggsave(
+  filename = "output/figures/egg_thiamine_conc_site_canada.png", 
+  plot = p_egg_thiamine_conc_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 ### Egg percent moisture -------------------------------------------------------
 
 #### Distribution --------------------------------------------------------------
@@ -282,13 +288,13 @@ p_egg_pct_moisture_site <- p_egg_pct_moisture_site +
 
 p_egg_pct_moisture_site
 
-#ggsave(
-#  filename = "output/figures/egg_pct_moisture_site_canada.png", 
-#  plot = p_egg_pct_moisture_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_pct_moisture_site_canada.png", 
+  plot = p_egg_pct_moisture_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 ### Egg total moisture ---------------------------------------------------------
 
@@ -391,13 +397,13 @@ p_egg_total_moisture_site <- p_egg_total_moisture_site +
 
 p_egg_total_moisture_site
 
-#ggsave(
-#  filename = "output/figures/egg_total_moisture_site_canada.png", 
-#  plot = p_egg_total_moisture_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_total_moisture_site_canada.png", 
+  plot = p_egg_total_moisture_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 
 ### Egg % lipid dry ------------------------------------------------------------
@@ -503,13 +509,13 @@ p_egg_pct_lipid_site <- p_egg_pct_lipid_site +
 
 p_egg_pct_lipid_site
 
-#ggsave(
-#  filename = "output/figures/egg_pct_lipid_site_canada.png", 
-#  plot = p_egg_pct_lipid_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_pct_lipid_site_canada.png", 
+  plot = p_egg_pct_lipid_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 ### Egg total lipid content ----------------------------------------------------
 
@@ -529,13 +535,13 @@ p_egg_total_lipid_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_lipid_distribution 
 
-#ggsave(                      
-#  filename = "output/figures/egg_total_lipid_distribution_canada.png", 
-#  plot = p_egg_total_lipid_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(                      
+  filename = "output/figures/egg_total_lipid_distribution_canada.png", 
+  plot = p_egg_total_lipid_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -553,7 +559,7 @@ p_egg_total_lipid_qq <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_lipid_qq
 
-# Normally distributed enough, checking homoscedacity to see if we can 
+# Normally distributed enough, checking homoscedasticity to see if we can 
 # proceed with ANOVA
 
 #### Homoscedasticity of Variance Test -----------------------------------------
@@ -584,7 +590,7 @@ summary(egg_total_lipid_aov)
 
 # significant differences between sites exist
 
-#### Dunn's Test ---------------------------------------------------------------
+#### Tukey Test ---------------------------------------------------------------
 egg_total_lipid_tukey <- TukeyHSD(egg_total_lipid_aov)
   
 egg_total_lipid_tukey
@@ -608,13 +614,13 @@ p_egg_total_lipid_site <- p_egg_total_lipid_site +
 
 p_egg_total_lipid_site
 
-#ggsave(
-#  filename = "output/figures/egg_total_lipid_site_canada.png", 
-#  plot = p_egg_total_lipid_site,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_total_lipid_site_canada.png", 
+  plot = p_egg_total_lipid_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 ### Egg % protein dry (estimate) -----------------------------------------------
 
@@ -634,13 +640,13 @@ p_egg_pct_protein_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_pct_protein_distribution 
 
-#ggsave(                      
-#  filename = "output/figures/egg_pct_protein_distribution_canada.png", 
-#  plot = p_egg_pct_protein_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(                      
+  filename = "output/figures/egg_pct_protein_distribution_canada.png", 
+  plot = p_egg_pct_protein_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -726,3 +732,115 @@ ggsave(
   height = 5,                                      
   dpi = 300                                        
 )
+
+### Egg total protein (estimate) content ---------------------------------------
+
+#### Distribution --------------------------------------------------------------
+
+p_egg_total_protein_distribution <- ggplot(data = canada_2023_df_moisture_trim, 
+                                         aes(x = protein_g_est, y = site, fill = group)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    position = "raincloud",
+    alpha = 0.75
+  ) +
+  labs(
+    x = "Egg Total Protetin Content (g; estimated)",
+    y = "Site"
+  ) 
+
+p_egg_total_protein_distribution 
+
+ggsave(                      
+  filename = "output/figures/egg_total_protein_distribution_canada.png", 
+  plot = p_egg_total_protein_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
+
+#### Q-Q plot to check for normal distribution at each site --------------------
+
+p_egg_total_protein_qq <- ggplot(data = canada_2023_df_moisture_trim,
+                               aes(sample = protein_g_est,
+                                   color = group)) +
+  stat_qq_band(fill = NA) +
+  stat_qq_line() +
+  stat_qq_point() +
+  facet_wrap(~ site, scales = "free_y") +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  ) 
+
+p_egg_total_protein_qq
+
+# Not normally distributed enough, checking homoscedasticity
+
+#### Homoscedasticity of Variance Test -----------------------------------------
+leveneTest(protein_g_est ~ site, data = canada_2023_df_moisture_trim)
+
+# Passes the Levene Test (p > 0.05), so the variance is homoscedastic between groups
+# Proceeding with Kruskal-Wallis
+
+#### Violin Plot ---------------------------------------------------------------
+
+p_egg_total_protein_site <- ggplot() +
+  geom_violin(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = protein_g_est, fill = group)) +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = protein_g_est),
+              width = 0.2) +
+  labs(
+    x = "Site",
+    y = "Egg Total Protein (g; estimated)"
+  )
+
+p_egg_total_protein_site
+
+#### Kruskal-Wallis ------------------------------------------------------------ 
+egg_total_protein_kw <- kruskal.test(protein_g_est ~ site,
+                                   data = canada_2023_df_moisture_trim)
+egg_total_protein_kw 
+
+# significant differences between sites exist
+
+#### Dunn's Test ---------------------------------------------------------------
+egg_total_protein_dunn <- dunn_test(data = canada_2023_df_moisture_trim,
+                                  formula = protein_g_est ~ site,
+                                  p.adjust.method = "bonferroni") 
+
+egg_total_protein_dunn_formatted <- egg_total_protein_dunn %>%
+  mutate(comparison = paste(group1, group2, sep = "-"))
+
+egg_total_protein_dunn_formatted
+
+#### Generate comparison letters -----------------------------------------------
+cld_egg_total_protein <- cldList(p.adj ~ comparison,
+                               data = egg_total_protein_dunn_formatted,
+                               threshold = 0.05) 
+
+# Create df of letters and positions
+cld_egg_total_protein_df <- cld_egg_total_protein |> 
+  rename(site = Group)
+
+# Get y-positions for labels
+egg_total_protein_text_df <- canada_2023_df_moisture_trim |> 
+  group_by(site) |> 
+  summarise(y_pos = max(protein_g_est) + 0.005) |> 
+  left_join(cld_egg_total_protein_df)
+
+# Add letters to plot
+p_egg_total_protein_site <- p_egg_total_protein_site +
+  geom_text(data = egg_total_protein_text_df, aes(x = site, y = y_pos, label = Letter))
+
+p_egg_total_protein_site
+
+ggsave(
+  filename = "output/figures/egg_total_protein_site_canada.png", 
+  plot = p_egg_total_protein_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
+
