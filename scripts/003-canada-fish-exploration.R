@@ -7,6 +7,10 @@ library(car)
 library(rcompanion)
 library(qqplotr)
 library(colorspace)
+library(patchwork)
+library(cowplot)
+
+# Global ggplot options --------------------------------------------------------
 
 color_palette <- c("#1F77B4FF", "#FF7F0EFF", "#2CA02CFF", "#D62728FF", "#9467BDFF",
                    "#8C564BFF", "#E377C2FF", "#7F7F7FFF", "#BCBD22FF", "#17BECFFF")
@@ -14,8 +18,11 @@ color_palette <- c("#1F77B4FF", "#FF7F0EFF", "#2CA02CFF", "#D62728FF", "#9467BDF
 options(ggplot2.discrete.colour = color_palette)
 options(ggplot2.discrete.fill = color_palette)
 
-# Set ggplot theme to bw
 theme_set(theme_bw())
+
+jitter_width = 0.1
+
+
 
 # Load clean data, remove points with no egg weight or moisture data
 canada_2023_df <- read_rds("data/processed/clean_2023_canada_data.rds") |> 
@@ -61,7 +68,7 @@ p_egg_mass_site <- ggplot() +
               aes(x = site, y = g_egg, fill = group)) +
   geom_jitter(data = canada_2023_df_egg_mass_trim, 
               aes(x = site, y = g_egg),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Average Egg Mass (g)"
@@ -142,7 +149,7 @@ p_egg_thiamine_conc_site <- ggplot() +
               aes(x = site, y = nmol_T_g, fill = group)) +
   geom_jitter(data = canada_2023_df, 
               aes(x = site, y = nmol_T_g),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Thiamine Concentration (nmol/g)"
@@ -202,6 +209,88 @@ ggsave(
   height = 5,                                      
   dpi = 300                                        
 )
+
+### Egg thiamine content (per egg) ---------------------------------------------
+
+#### Distribution --------------------------------------------------------------
+
+p_egg_total_thiamine_distribution <- ggplot(data = canada_2023_df, 
+                                           aes(x = nmol_T_egg, y = site, fill = group)) +
+  geom_density_ridges(
+    jittered_points = TRUE,
+    position = "raincloud",
+    alpha = 0.75
+  ) +
+  labs(
+    x = "Egg Thiamine Content (nmol/egg)",
+    y = "Site"
+  ) 
+
+p_egg_total_thiamine_distribution 
+
+ggsave(                      
+  filename = "output/figures/egg_total_thiamine_distribution_canada.png", 
+  plot = p_egg_total_thiamine_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
+
+#### Q-Q plot to check for normal distribution at each site --------------------
+
+p_egg_total_thiamine_qq <- ggplot(data = canada_2023_df,
+                                 aes(sample = nmol_T_egg,
+                                     color = group)) +
+  stat_qq_band(fill = NA) +
+  stat_qq_line() +
+  stat_qq_point() +
+  facet_wrap(~ site, scales = "free_y") +
+  labs(
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  ) 
+
+p_egg_total_thiamine_qq
+
+# Not normally distributed enough, checking homoscedasticity
+
+#### Homoscedasticity of Variance Test -----------------------------------------
+leveneTest(nmol_T_egg ~ site, data = canada_2023_df)
+
+# Passes the Levene Test (p > 0.05), so the variance is homoscedastic between groups
+# Proceeding with Kruskal-Wallis
+
+#### Violin Plot ---------------------------------------------------------------
+
+p_egg_total_thiamine_site <- ggplot() +
+  geom_violin(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_egg, fill = group)) +
+  geom_jitter(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_egg),
+              width = jitter_width) +
+  labs(
+    x = "Site",
+    y = "Egg Thiamine Content (nmol/egg)"
+  )
+
+p_egg_total_thiamine_site
+
+#### Kruskal-Wallis ------------------------------------------------------------ 
+egg_total_thiamine_kw <- kruskal.test(nmol_T_egg ~ site,
+                                     data = canada_2023_df)
+egg_total_thiamine_kw 
+
+# no significant differences between sites exist, no post-hoc analysis
+
+ggsave(
+  filename = "output/figures/egg_total_thiamine_site_canada.png", 
+  plot = p_egg_total_thiamine_site,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
+
+
 ### Egg percent moisture -------------------------------------------------------
 
 #### Distribution --------------------------------------------------------------
@@ -237,7 +326,7 @@ p_egg_pct_moisture_site <- ggplot() +
               aes(x = site, y = pct_moisture, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_moisture),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Moisture"
@@ -346,7 +435,7 @@ p_egg_total_moisture_site <- ggplot() +
               aes(x = site, y = water_g, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = water_g),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Total Moisture (g)"
@@ -458,7 +547,7 @@ p_egg_pct_lipid_site <- ggplot() +
               aes(x = site, y = pct_lipid_dry, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_lipid_dry),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Lipid (dry)"
@@ -575,7 +664,7 @@ p_egg_total_lipid_site <- ggplot() +
               aes(x = site, y = lipid_g, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = lipid_g),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Total Lipid (g)"
@@ -674,7 +763,7 @@ p_egg_pct_protein_site <- ggplot() +
               aes(x = site, y = pct_protein_est_dry, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_protein_est_dry),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Protein Estimate (dry)"
@@ -790,7 +879,7 @@ p_egg_total_protein_site <- ggplot() +
               aes(x = site, y = protein_g_est, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = protein_g_est),
-              width = 0.2) +
+              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Total Protein (g; estimated)"
@@ -844,3 +933,79 @@ ggsave(
   dpi = 300                                        
 )
 
+## Making multi panel plots ----------------------------------------------------
+
+#long_df <- canada_2023_df |> 
+#  select(site, group, g_egg, water_g, protein_g_est, lipid_g, nmol_T_egg) |> 
+#  rename(
+#    `Mean Egg Mass (g)` = g_egg,
+#    `Lipid Content (g)` = lipid_g,
+#    `Thiamine Content (nmol/egg)` = nmol_T_egg,
+#    `Estimated Protein Content (g)` = protein_g_est,
+#    `Water Content (g)` = water_g
+#  ) |> 
+#  pivot_longer(
+#    cols = -c(site, group),
+#    names_to = "Measurement",
+#    values_to = "Value"
+#  )
+#
+#ggplot(long_df, aes(x = site, y = Value)) +
+#  geom_violin(aes(fill = group)) + # Fill by Site instead of group
+#  geom_jitter(width = jitter_width, alpha = 0.5) +
+#  facet_wrap(~ Measurement, scales = 'free_y', ncol = 2) + # Key step!
+#  labs(
+#    title = "Yukon Egg Composition by Site",
+#    x = "Site",
+#    y = "Value" # The y-axis label is less important as each panel is distinct
+#  ) +
+#  theme_bw()
+
+### Total egg contents plot ----------------------------------------------------
+p1 <- p_egg_mass_site 
+
+p2 <- p_egg_total_moisture_site
+
+p3 <- p_egg_total_lipid_site
+
+p4 <- p_egg_total_protein_site
+
+p5 <- p_egg_total_thiamine_site
+
+p_total_egg_content <- (
+  p1 + p2 + p3 + p4 + p5 + guide_area() + plot_layout(guides = "collect",
+                                                    axes = "collect")
+  )
+
+ggsave(
+  filename = "output/figures/total_egg_contents_site_canada.png", 
+  plot = p_total_egg_content,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
+
+### Egg % contents plot --------------------------------------------------------
+
+p6 <- p_egg_pct_moisture_site
+
+p7 <- p_egg_pct_lipid_site
+
+p8 <- p_egg_pct_protein_site
+
+p9 <- p_egg_thiamine_conc_site
+
+p_pct_egg_content <- (
+  p1 + p6 + p7 + p8 + p9 + guide_area() + plot_layout(guides = "collect",
+                                                      axes = "collect")
+)
+
+p_pct_egg_content
+
+ggsave(
+  filename = "output/figures/pct_egg_contents_site_canada.png", 
+  plot = p_pct_egg_content,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)

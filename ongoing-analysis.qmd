@@ -18,36 +18,6 @@ library(png)
 library(here)
 ```
 
-## Distribution Visualizations
-
-### Egg mass distributions
-
-First, I wanted to visualize the average egg mass distribution by
-collection site.
-
-```{r}
-#| label: fig-egg-distribution-site
-#| echo: false
-#| fig-cap: "Mean egg mass distribution for each collection site."
-
-knitr::include_graphics("output/figures/egg_mass_distribution_site.png")
-
-```
-
-We can see a general increase in average egg size as the fish move up
-the river. Most sites have a generally normal distribution, Chena does
-not but there are only 3 fish. I decided to remove Chena and Salcha from
-downstream analyses. I can easily add them back in.
-
-```{r}
-#| label: fig-egg-distribution-site-no-chalcha
-#| echo: false
-#| fig-cap: "Mean egg mass distribution for each collection site. Chena and Salcha are removed."
-
-knitr::include_graphics("output/figures/egg_mass_distribution_site_nochalcha.png")
-
-```
-
 ## Canada-bound fish (2023)
 
 Here I have filtered to only include fish genetically identified as
@@ -58,12 +28,55 @@ Take home messages from the analyses below, as fish move upriver:
 
 - Egg mass increases 
 - Egg thiamine concentration decreases 
+- Egg thiamine total content does not change
 - Egg % moisture decreases, then increases 
 - Egg total moisture content increases
 - Egg % lipid (dry) decreases
 - Egg total lipid content increases from PIST
 - Egg % protein (dry) estimate increases
 - Egg protein content (estimated) increases 
+
+### Overall Egg Contents 
+
+```{r}
+#| label: fig-egg-total-content-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Overall contents of Chinook salmon eggs collected at sites along the Yukon river."
+
+knitr::include_graphics("output/figures/total_egg_contents_site_canada.png")
+```
+
+Here we can clearly see that eggs are increasing in size, water content, lipid
+content, and protein content (estimated) as fish move upriver. However the 
+amount of thiamine in each egg is not changing. Letters indicate significantly
+different groups.
+
+```{r}
+#| label: fig-egg-pct-content-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Percentage makeup of Chinook salmon eggs collected at sites along the Yukon river."
+
+knitr::include_graphics("output/figures/pct_egg_contents_site_canada.png")
+```
+
+
+By comparing the increase in average egg mass with the percentage of egg
+contents as fish move upriver we can begin to get an idea of how an egg develops 
+over time. 
+
+Total thiamine content remains unchanged as fish move upriver, so 
+if looking at thiamine content as a concentration, it appears to decrease as
+fish move upriver and eggs get larger.
+
+The other three variables (moisture, lipids, and protein) all increase in content
+as the fish move upriver, seemingly at different rates or amounts, though. It 
+seems like egg moisture, or water content, is added to the egg early and late
+in development. Protein seems to be added at an increasing rate, as estimated protein content incrases as egg mass also increases. Lipids seem to be added at a steady
+rate, with the % lipid content slightly decreasing as eggs get larger.
+
+Should probably look at all this again as regression plots.
 
 ### Average Egg Mass
 
@@ -98,7 +111,7 @@ river. Eggs are getting larger as the fish proceed towards Whitehorse.
 
 These data meet the assumptions of an ANOVA test. The data are mostly
 normally distributed, there is homoscedasticity of variance (Levene's
-test p \> 0.05), and the observations are independent of each other. The
+test p > 0.05), and the observations are independent of each other. The
 observations are independent because we are only looking at Canada-bound
 fish, if we were looking at fish assigned to different "stocks" we would
 need to account for the random effect of "stock".
@@ -146,6 +159,39 @@ Kruskal-Wallis test compares the group medians (mean ranks) rather than
 the means like an ANOVA. Because the variance of each group is not
 homoscedastic, all we can confidently say is that the distributions of
 the different groupings are different.
+
+### Egg Thiamine Content
+
+#### Distribution
+
+```{r}
+#| label: fig-egg-total-thiamine-density-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Total egg thiamine content distributions at Canada-bound collection sites."
+
+knitr::include_graphics("output/figures/egg_total_thiamine_distribution_canada.png")
+
+```
+
+Distributions verging from normality at all sites, used non-parametric Kruskal-Wallis
+test to test differences.
+
+#### Violin Plot
+
+```{r}
+#| label: fig-egg-total-thiamine-violin-canada
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Total egg thiamine content at Canada-bound collection sites."
+
+knitr::include_graphics("output/figures/egg_total_thiamine_site_canada.png")
+
+```
+
+
+Kruskal-Wallis test p-value > 0.05, no significant difference in medians
+across sites. Total egg thiamine (nmol/g) does not change along the river.
 
 ### Egg Percent Moisture
 
@@ -329,3 +375,35 @@ knitr::include_graphics("output/figures/egg_total_protein_site_canada.png")
 ```
 
 Total egg protein content estimates increase along the river.
+
+
+# Under construction from here down
+## Distribution Visualizations
+
+### Egg mass distributions
+
+First, I wanted to visualize the average egg mass distribution by
+collection site.
+
+```{r}
+#| label: fig-egg-distribution-site
+#| echo: false
+#| fig-cap: "Mean egg mass distribution for each collection site."
+
+knitr::include_graphics("output/figures/egg_mass_distribution_site.png")
+
+```
+
+We can see a general increase in average egg size as the fish move up
+the river. Most sites have a generally normal distribution, Chena does
+not but there are only 3 fish. I decided to remove Chena and Salcha from
+downstream analyses. I can easily add them back in.
+
+```{r}
+#| label: fig-egg-distribution-site-no-chalcha
+#| echo: false
+#| fig-cap: "Mean egg mass distribution for each collection site. Chena and Salcha are removed."
+
+knitr::include_graphics("output/figures/egg_mass_distribution_site_nochalcha.png")
+
+```
