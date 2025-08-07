@@ -2,6 +2,7 @@
 title: "Yukon Egg Analysis"
 format:
   html: {}
+lightbox: true
 editor_options:
   chunk_output_type: console
 toc: true
