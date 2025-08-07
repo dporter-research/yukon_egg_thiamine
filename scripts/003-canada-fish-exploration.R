@@ -1011,28 +1011,33 @@ p1 <- p_egg_mass_site +
                           aes(x = site, y = g_egg),
                           width = jitter_width,
                           size = multifig_point_size,
-                          alpha = multifig_point_alpha)
+                          alpha = multifig_point_alpha) +
+  geom_text(data = egg_mass_text_df, aes(x = site, y = y_pos, label = Letters))
 
 p2 <- p_egg_total_moisture_site +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = water_g),
               width = jitter_width,
               size = multifig_point_size,
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_total_moisture_text_df, aes(x = site, y = y_pos, label = Letter))
 
 p3 <- p_egg_total_lipid_site +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = lipid_g),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_total_lipid_text_df, aes(x = site, y = y_pos, label = Letters))
 
 p4 <- p_egg_total_protein_site +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = protein_g_est),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_total_protein_text_df, aes(x = site, y = y_pos, label = Letter))
+
 
 p5 <- p_egg_total_thiamine_site +
   geom_jitter(data = canada_2023_df, 
@@ -1045,6 +1050,8 @@ p_total_egg_content <- (
   p1 + p2 + p3 + p4 + p5 + guide_area() + plot_layout(guides = "collect",
                                                     axes = "collect")
   )
+
+p_total_egg_content
 
 ggsave(
   filename = "output/figures/total_egg_contents_site_canada.png", 
@@ -1061,28 +1068,32 @@ p6 <- p_egg_pct_moisture_site +
               aes(x = site, y = pct_moisture),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_pct_moisture_text_df, aes(x = site, y = y_pos, label = Letter))
 
 p7 <- p_egg_pct_lipid_site +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_lipid_dry),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_pct_lipid_text_df, aes(x = site, y = y_pos, label = Letter))
 
 p8 <- p_egg_pct_protein_site +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_protein_est_dry),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_pct_protein_text_df, aes(x = site, y = y_pos, label = Letter))
 
 p9 <- p_egg_thiamine_conc_site +
   geom_jitter(data = canada_2023_df, 
               aes(x = site, y = nmol_T_g),
               width = jitter_width,
               size = multifig_point_size, 
-              alpha = multifig_point_alpha)
+              alpha = multifig_point_alpha) +
+  geom_text(data = egg_conc_text_df, aes(x = site, y = y_pos, label = Letter))
 
 p_pct_egg_content <- (
   p1 + p6 + p7 + p8 + p9 + guide_area() + plot_layout(guides = "collect",
@@ -1098,3 +1109,4 @@ ggsave(
   height = 5,                                      
   dpi = 300                                        
 )
+
