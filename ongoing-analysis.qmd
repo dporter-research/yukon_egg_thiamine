@@ -1,5 +1,7 @@
 ---
 title: "Yukon Egg Analysis"
+author: "Drew Porter"
+date-modified: "last-modified"
 format:
   html: {}
 lightbox: true
