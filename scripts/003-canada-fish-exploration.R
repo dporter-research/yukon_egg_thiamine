@@ -21,6 +21,8 @@ options(ggplot2.discrete.fill = color_palette)
 theme_set(theme_bw())
 
 jitter_width = 0.1
+multifig_point_size = 0.75
+multifig_point_alpha = 0.5
 
 
 
@@ -62,19 +64,23 @@ ggsave(
   dpi = 300                                        
 )
 
-#### Boxplot -------------------------------------------------------------------
+#### Violin Plot -------------------------------------------------------------------
 p_egg_mass_site <- ggplot() +
   geom_violin(data = canada_2023_df_egg_mass_trim, 
               aes(x = site, y = g_egg, fill = group)) +
-  geom_jitter(data = canada_2023_df_egg_mass_trim, 
-              aes(x = site, y = g_egg),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Average Egg Mass (g)"
   )
 
 p_egg_mass_site
+
+p_egg_mass_site_points <- p_egg_mass_site +
+  geom_jitter(data = canada_2023_df_egg_mass_trim, 
+              aes(x = site, y = g_egg),
+              width = jitter_width)
+
+p_egg_mass_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(g_egg ~ site, data = canada_2023_df_egg_mass_trim)
@@ -103,14 +109,14 @@ egg_mass_text_df <- canada_2023_df_egg_mass_trim |>
   left_join(cld_egg_mass_df)
 
 # Add letters to plot
-p_egg_mass_site <- p_egg_mass_site +
+p_egg_mass_site_points <- p_egg_mass_site_points +
   geom_text(data = egg_mass_text_df, aes(x = site, y = y_pos, label = Letters))
 
-p_egg_mass_site
+p_egg_mass_site_points
 
 ggsave(
   filename = "output/figures/egg_mass_site_canada.png", 
-  plot = p_egg_mass_site,                         
+  plot = p_egg_mass_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -134,28 +140,32 @@ p_egg_thiamine_conc_distribution <- ggplot(data = canada_2023_df_egg_mass_trim,
 
 p_egg_thiamine_conc_distribution 
 
-#ggsave(
-#  filename = "output/figures/egg_thiamine_concentration_distribution_canada.png", 
-#  plot = p_egg_thiamine_conc_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_thiamine_concentration_distribution_canada.png", 
+  plot = p_egg_thiamine_conc_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
-#### Boxplot -------------------------------------------------------------------
+#### Violin Plot -------------------------------------------------------------------
 
 p_egg_thiamine_conc_site <- ggplot() +
   geom_violin(data = canada_2023_df, 
               aes(x = site, y = nmol_T_g, fill = group)) +
-  geom_jitter(data = canada_2023_df, 
-              aes(x = site, y = nmol_T_g),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Thiamine Concentration (nmol/g)"
   )
 
 p_egg_thiamine_conc_site
+
+p_egg_thiamine_conc_site_points <- p_egg_thiamine_conc_site +
+  geom_jitter(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_g),
+              width = jitter_width)
+
+p_egg_thiamine_conc_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(nmol_T_g ~ site, data = canada_2023_df)
@@ -197,14 +207,14 @@ egg_conc_text_df <- canada_2023_df |>
   left_join(cld_egg_conc_df)
 
 # Add letters to plot
-p_egg_thiamine_conc_site <- p_egg_thiamine_conc_site +
+p_egg_thiamine_conc_site_points <- p_egg_thiamine_conc_site_points +
   geom_text(data = egg_conc_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_thiamine_conc_site
+p_egg_thiamine_conc_site_points
 
 ggsave(
   filename = "output/figures/egg_thiamine_conc_site_canada.png", 
-  plot = p_egg_thiamine_conc_site,                         
+  plot = p_egg_thiamine_conc_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -265,15 +275,19 @@ leveneTest(nmol_T_egg ~ site, data = canada_2023_df)
 p_egg_total_thiamine_site <- ggplot() +
   geom_violin(data = canada_2023_df, 
               aes(x = site, y = nmol_T_egg, fill = group)) +
-  geom_jitter(data = canada_2023_df, 
-              aes(x = site, y = nmol_T_egg),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Thiamine Content (nmol/egg)"
   )
 
 p_egg_total_thiamine_site
+
+p_egg_total_thiamine_site_points <- p_egg_total_thiamine_site +
+  geom_jitter(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_egg),
+              width = jitter_width)
+
+p_egg_total_thiamine_site_points
 
 #### Kruskal-Wallis ------------------------------------------------------------ 
 egg_total_thiamine_kw <- kruskal.test(nmol_T_egg ~ site,
@@ -284,7 +298,7 @@ egg_total_thiamine_kw
 
 ggsave(
   filename = "output/figures/egg_total_thiamine_site_canada.png", 
-  plot = p_egg_total_thiamine_site,                         
+  plot = p_egg_total_thiamine_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -311,28 +325,32 @@ p_egg_pct_moisture_distribution
 
 # Not a normal distribution, can't use ANOVA or Welch's ANOVA
 
-#ggsave(
-#  filename = "output/figures/egg_pct_moisture_distribution_canada.png", 
-#  plot = p_egg_pct_moisture_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_pct_moisture_distribution_canada.png", 
+  plot = p_egg_pct_moisture_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
-#### Boxplot -------------------------------------------------------------------
+#### Violin Plot -------------------------------------------------------------------
 
 p_egg_pct_moisture_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_moisture, fill = group)) +
-  geom_jitter(data = canada_2023_df_moisture_trim, 
-              aes(x = site, y = pct_moisture),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Moisture"
   )
 
 p_egg_pct_moisture_site
+
+p_egg_pct_moisture_site_points <- p_egg_pct_moisture_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_moisture),
+              width = jitter_width)
+
+p_egg_pct_moisture_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(pct_moisture ~ site, data = canada_2023_df_moisture_trim)
@@ -372,14 +390,14 @@ egg_pct_moisture_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_pct_moisture_df)
 
 # Add letters to plot
-p_egg_pct_moisture_site <- p_egg_pct_moisture_site +
+p_egg_pct_moisture_site_points <- p_egg_pct_moisture_site_points +
   geom_text(data = egg_pct_moisture_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_pct_moisture_site
+p_egg_pct_moisture_site_points
 
 ggsave(
   filename = "output/figures/egg_pct_moisture_site_canada.png", 
-  plot = p_egg_pct_moisture_site,                         
+  plot = p_egg_pct_moisture_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -403,13 +421,13 @@ p_egg_total_moisture_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_moisture_distribution 
 
-#ggsave(
-#  filename = "output/figures/egg_total_moisture_distribution_canada.png", 
-#  plot = p_egg_total_moisture_distribution,                         
-#  width = 7,                                        
-#  height = 5,                                      
-#  dpi = 300                                        
-#)
+ggsave(
+  filename = "output/figures/egg_total_moisture_distribution_canada.png", 
+  plot = p_egg_total_moisture_distribution,                         
+  width = 7,                                        
+  height = 5,                                      
+  dpi = 300                                        
+)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -433,15 +451,19 @@ p_egg_total_moisture_qq
 p_egg_total_moisture_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = water_g, fill = group)) +
-  geom_jitter(data = canada_2023_df_moisture_trim, 
-              aes(x = site, y = water_g),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Total Moisture (g)"
   )
 
 p_egg_total_moisture_site
+
+p_egg_total_moisture_site_points <- p_egg_total_moisture_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = water_g),
+              width = jitter_width)
+
+p_egg_total_moisture_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(water_g ~ site, data = canada_2023_df_moisture_trim)
@@ -481,14 +503,14 @@ egg_total_moisture_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_total_moisture_df)
 
 # Add letters to plot
-p_egg_total_moisture_site <- p_egg_total_moisture_site +
+p_egg_total_moisture_site_points <- p_egg_total_moisture_site_points +
   geom_text(data = egg_total_moisture_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_total_moisture_site
+p_egg_total_moisture_site_points
 
 ggsave(
   filename = "output/figures/egg_total_moisture_site_canada.png", 
-  plot = p_egg_total_moisture_site,                         
+  plot = p_egg_total_moisture_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -545,15 +567,19 @@ p_egg_pct_lipid_qq
 p_egg_pct_lipid_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_lipid_dry, fill = group)) +
-  geom_jitter(data = canada_2023_df_moisture_trim, 
-              aes(x = site, y = pct_lipid_dry),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Lipid (dry)"
   )
 
 p_egg_pct_lipid_site
+
+p_egg_pct_lipid_site_points <- p_egg_pct_lipid_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_lipid_dry),
+              width = jitter_width)
+
+p_egg_pct_lipid_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(pct_lipid_dry ~ site, data = canada_2023_df_moisture_trim)
@@ -593,14 +619,14 @@ egg_pct_lipid_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_pct_lipid_df)
 
 # Add letters to plot
-p_egg_pct_lipid_site <- p_egg_pct_lipid_site +
+p_egg_pct_lipid_site_points <- p_egg_pct_lipid_site_points +
   geom_text(data = egg_pct_lipid_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_pct_lipid_site
+p_egg_pct_lipid_site_points
 
 ggsave(
   filename = "output/figures/egg_pct_lipid_site_canada.png", 
-  plot = p_egg_pct_lipid_site,                         
+  plot = p_egg_pct_lipid_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -662,6 +688,16 @@ leveneTest(lipid_g ~ site, data = canada_2023_df_moisture_trim)
 p_egg_total_lipid_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = lipid_g, fill = group)) +
+  labs(
+    x = "Site",
+    y = "Egg Total Lipid (g)"
+  )
+
+p_egg_total_lipid_site
+
+p_egg_total_lipid_site_points <- p_egg_total_lipid_site +
+  geom_violin(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = lipid_g, fill = group)) +
   geom_jitter(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = lipid_g),
               width = jitter_width) +
@@ -670,7 +706,7 @@ p_egg_total_lipid_site <- ggplot() +
     y = "Egg Total Lipid (g)"
   )
 
-p_egg_total_lipid_site
+p_egg_total_lipid_site_points
 
 #### ANOVA --------------------------------------------------------------------- 
 egg_total_lipid_aov <- aov(lipid_g ~ site,
@@ -698,14 +734,14 @@ egg_total_lipid_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_total_lipid_df)
 
 # Add letters to plot
-p_egg_total_lipid_site <- p_egg_total_lipid_site +
+p_egg_total_lipid_site_points <- p_egg_total_lipid_site_points +
   geom_text(data = egg_total_lipid_text_df, aes(x = site, y = y_pos, label = Letters))
 
-p_egg_total_lipid_site
+p_egg_total_lipid_site_points
 
 ggsave(
   filename = "output/figures/egg_total_lipid_site_canada.png", 
-  plot = p_egg_total_lipid_site,                         
+  plot = p_egg_total_lipid_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -761,15 +797,19 @@ p_egg_pct_protein_qq
 p_egg_pct_protein_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = pct_protein_est_dry, fill = group)) +
-  geom_jitter(data = canada_2023_df_moisture_trim, 
-              aes(x = site, y = pct_protein_est_dry),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg % Protein Estimate (dry)"
   )
 
 p_egg_pct_protein_site
+
+p_egg_pct_protein_site_points <- p_egg_pct_protein_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_protein_est_dry),
+              width = jitter_width)
+
+p_egg_pct_protein_site_points
 
 #### Homoscedasticity of Variance Test -----------------------------------------
 leveneTest(pct_protein_est_dry ~ site, data = canada_2023_df_moisture_trim)
@@ -809,14 +849,14 @@ egg_pct_protein_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_pct_protein_df)
 
 # Add letters to plot
-p_egg_pct_protein_site <- p_egg_pct_protein_site +
+p_egg_pct_protein_site_points <- p_egg_pct_protein_site_points +
   geom_text(data = egg_pct_protein_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_pct_protein_site
+p_egg_pct_protein_site_points
 
 ggsave(
   filename = "output/figures/egg_pct_protein_site_canada.png", 
-  plot = p_egg_pct_protein_site,                         
+  plot = p_egg_pct_protein_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -877,15 +917,19 @@ leveneTest(protein_g_est ~ site, data = canada_2023_df_moisture_trim)
 p_egg_total_protein_site <- ggplot() +
   geom_violin(data = canada_2023_df_moisture_trim, 
               aes(x = site, y = protein_g_est, fill = group)) +
-  geom_jitter(data = canada_2023_df_moisture_trim, 
-              aes(x = site, y = protein_g_est),
-              width = jitter_width) +
   labs(
     x = "Site",
     y = "Egg Total Protein (g; estimated)"
   )
 
 p_egg_total_protein_site
+
+p_egg_total_protein_site_points <- p_egg_total_protein_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = protein_g_est),
+              width = jitter_width)
+  
+p_egg_total_protein_site_points
 
 #### Kruskal-Wallis ------------------------------------------------------------ 
 egg_total_protein_kw <- kruskal.test(protein_g_est ~ site,
@@ -920,14 +964,14 @@ egg_total_protein_text_df <- canada_2023_df_moisture_trim |>
   left_join(cld_egg_total_protein_df)
 
 # Add letters to plot
-p_egg_total_protein_site <- p_egg_total_protein_site +
+p_egg_total_protein_site_points <- p_egg_total_protein_site_points +
   geom_text(data = egg_total_protein_text_df, aes(x = site, y = y_pos, label = Letter))
 
-p_egg_total_protein_site
+p_egg_total_protein_site_points
 
 ggsave(
   filename = "output/figures/egg_total_protein_site_canada.png", 
-  plot = p_egg_total_protein_site,                         
+  plot = p_egg_total_protein_site_points,                         
   width = 7,                                        
   height = 5,                                      
   dpi = 300                                        
@@ -962,15 +1006,40 @@ ggsave(
 #  theme_bw()
 
 ### Total egg contents plot ----------------------------------------------------
-p1 <- p_egg_mass_site 
+p1 <- p_egg_mass_site +
+  geom_jitter(data = canada_2023_df_egg_mass_trim, 
+                          aes(x = site, y = g_egg),
+                          width = jitter_width,
+                          size = multifig_point_size,
+                          alpha = multifig_point_alpha)
 
-p2 <- p_egg_total_moisture_site
+p2 <- p_egg_total_moisture_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = water_g),
+              width = jitter_width,
+              size = multifig_point_size,
+              alpha = multifig_point_alpha)
 
-p3 <- p_egg_total_lipid_site
+p3 <- p_egg_total_lipid_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = lipid_g),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
-p4 <- p_egg_total_protein_site
+p4 <- p_egg_total_protein_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = protein_g_est),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
-p5 <- p_egg_total_thiamine_site
+p5 <- p_egg_total_thiamine_site +
+  geom_jitter(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_egg),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
 p_total_egg_content <- (
   p1 + p2 + p3 + p4 + p5 + guide_area() + plot_layout(guides = "collect",
@@ -987,13 +1056,33 @@ ggsave(
 
 ### Egg % contents plot --------------------------------------------------------
 
-p6 <- p_egg_pct_moisture_site
+p6 <- p_egg_pct_moisture_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_moisture),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
-p7 <- p_egg_pct_lipid_site
+p7 <- p_egg_pct_lipid_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_lipid_dry),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
-p8 <- p_egg_pct_protein_site
+p8 <- p_egg_pct_protein_site +
+  geom_jitter(data = canada_2023_df_moisture_trim, 
+              aes(x = site, y = pct_protein_est_dry),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
-p9 <- p_egg_thiamine_conc_site
+p9 <- p_egg_thiamine_conc_site +
+  geom_jitter(data = canada_2023_df, 
+              aes(x = site, y = nmol_T_g),
+              width = jitter_width,
+              size = multifig_point_size, 
+              alpha = multifig_point_alpha)
 
 p_pct_egg_content <- (
   p1 + p6 + p7 + p8 + p9 + guide_area() + plot_layout(guides = "collect",
