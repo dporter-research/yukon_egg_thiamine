@@ -1110,3 +1110,17 @@ ggsave(
   dpi = 300                                        
 )
 
+# Egg Composistion Summary Table -----------------------------------------------
+
+egg_comp_summary <- canada_2023_df |> 
+  group_by(site) |> 
+  summarise(
+    pct_moisture = round(mean(pct_moisture, na.rm = TRUE), 2),
+    pct_dry_matter = round(mean(pct_dry_matter, na.rm = TRUE), 2),
+    pct_lipid_wet = round(mean(pct_lipid_wet, na.rm = TRUE), 2),
+    pct_protein_wet = 1 - pct_moisture - pct_lipid_wet,
+    pct_lipid_dry = round(mean(pct_lipid_dry, na.rm = TRUE), 2),
+    pct_protein_est_dry = round(mean(pct_protein_est_dry, na.rm = TRUE), 2)
+  )
+
+egg_comp_summary
