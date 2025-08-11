@@ -128,13 +128,24 @@ clean_2023_df_join2 <- clean_2023_df_join1 |>
   select(-collection_date.x, -collection_date.y,
          -length_mideye_fork_mm.x, -length_mideye_fork_mm.y)
 
-# Write clean data -------------------------------------------------------------
-write_rds(clean_2023_df_join2, "data/processed/clean_2023_data.rds")
+# Create a USGS_id variable based off of our SINS to match Vanessa's IDs -------
+USGS_id_df <- clean_2023_df_join2 |> 
+  mutate(
+    USGS_id = case_when(
+      str_starts(SIN, "CHIN") ~ str_replace_all(SIN, "_", ""),
+      str_detect(SIN, "^(FOYU|PIST|RARA)23_") ~ str_replace(SIN, "23_", "-2023-"),
+      str_starts(SIN, "Salcha") ~ str_replace(SIN, "_", " "),
+      TRUE ~ USGS_id
+    )
+  )
 
-write_csv(clean_2023_df_join2, "data/processed/clean_2023_yukon_data.csv")
+# Write clean data -------------------------------------------------------------
+write_rds(USGS_id_df, "data/processed/clean_2023_data.rds")
+
+write_csv(USGS_id_df, "data/processed/clean_2023_yukon_data.csv")
 
 # Write a clean copy of only Canada fish ---------------------------------------
-clean_2023_canada_df <- clean_2023_df_join2 |> 
+clean_2023_canada_df <- USGS_id_df |> 
   filter(fine_group == "Canada")
 
 write_rds(clean_2023_canada_df, "data/processed/clean_2023_canada_data.rds")
