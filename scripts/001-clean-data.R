@@ -2,7 +2,9 @@ library(tidyverse)
 library(readxl)
 
 # Load raw data
-raw_2023_df <- read_rds("data/raw/yukon_egg_thiamine_2023.rds")
+raw_2023_df <- read_csv("data/raw/yukon_egg_thiamine_2023.csv",
+                        col_types = "cnnnnnnfffcc")
+
 
 # Load PIST genetic assignment
 pist_2023_genetics <- read_csv("data/raw/2023_yukon_PIST_genetic_assignment.csv") |> 
