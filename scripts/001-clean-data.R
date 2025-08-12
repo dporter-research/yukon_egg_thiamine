@@ -139,13 +139,30 @@ USGS_id_df <- clean_2023_df_join2 |>
     )
   )
 
-# Write clean data -------------------------------------------------------------
-write_rds(USGS_id_df, "data/processed/clean_2023_data.rds")
+# Get collection date of WH eggs -----------------------------------------------
+# Load WH hatchery data
+wh_hatchery_2023 <- read_csv("data/raw/2023 Whitehorse Egg Survival.csv") |> 
+  dplyr::select(`Egg Take Date`, `Hatchery Fish ID`) |> 
+  mutate(collection_date = mdy(`Egg Take Date`)) |> 
+  drop_na() |> 
+  select(-`Egg Take Date`)
 
-write_csv(USGS_id_df, "data/processed/clean_2023_yukon_data.csv")
+WH_dates <- USGS_id_df |>
+  left_join(
+    wh_hatchery_2023, 
+    join_by(WH_hatchery_id == `Hatchery Fish ID`)
+  ) |> 
+  mutate(collection_date = collection_date.x, collection_date.y) |> 
+  select(-collection_date.x, -collection_date.y)
+
+
+# Write clean data -------------------------------------------------------------
+write_rds(WH_dates, "data/processed/clean_2023_data.rds")
+
+write_csv(WH_dates, "data/processed/clean_2023_yukon_data.csv")
 
 # Write a clean copy of only Canada fish ---------------------------------------
-clean_2023_canada_df <- USGS_id_df |> 
+clean_2023_canada_df <- WH_dates |> 
   filter(fine_group == "Canada")
 
 write_rds(clean_2023_canada_df, "data/processed/clean_2023_canada_data.rds")
