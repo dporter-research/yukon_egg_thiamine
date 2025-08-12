@@ -1124,3 +1124,14 @@ egg_comp_summary <- canada_2023_df |>
   )
 
 egg_comp_summary
+
+
+# Egg size by day of year ------------------------------------------------------
+
+?lubridate
+canada_2023_df <- canada_2023_df |> 
+  mutate(yday = yday(canada_2023_df$collection_date))
+
+
+ggplot(data = canada_2023_df, aes(x = yday, y = g_egg, color = site)) +
+  geom_point()
