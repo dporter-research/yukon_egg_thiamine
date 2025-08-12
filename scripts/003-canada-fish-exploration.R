@@ -1135,3 +1135,12 @@ canada_2023_df <- canada_2023_df |>
 
 ggplot(data = canada_2023_df, aes(x = yday, y = g_egg, color = site)) +
   geom_point()
+
+ggplot(data = canada_2023_df, aes(x = yday, y = nmol_T_egg, color = site)) +
+  geom_point()
+
+ggplot(data = canada_2023_df, aes(x = yday, y = nmol_T_g, color = site)) +
+  geom_point()
+
+ggplot(data = canada_2023_df, aes(x = length_mideye_fork_mm, y = nmol_T_egg, color = site)) +
+  geom_point()
