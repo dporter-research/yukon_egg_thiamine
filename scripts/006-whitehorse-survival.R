@@ -23,25 +23,33 @@ wh_2023 <- read_rds("data/processed/clean_2023_data.rds") |>
 
 # Load WH hatchery data
 hatchery_2023 <- read_csv("data/raw/2023 Whitehorse Egg Survival.csv") |> 
-  select(
-    `Hatchery Fish ID`, `Egg Take Date`, `% Survival Green-Eyed`, 
-    `% Survival: Green - Hatch`, `% Survival: Green - Ponding`, 
-    `Female Notes`, `Pre-eyed Morts`, `Total Eyed Eggs`, `Green Or Eyed Egg Donations`,
-    `Total at Hatched Stage`, `Hatch to Ponding Morts`, `Total at Ponding`
-  ) |> 
   rename(
-   WH_hatchery_id = `Hatchery Fish ID`,
-   WH_egg_take_date  = `Egg Take Date`,
-   WH_surv_green_eyed = `% Survival Green-Eyed`,
-   WH_surv_green_hatch = `% Survival: Green - Hatch`,
-   WH_surv_green_pond = `% Survival: Green - Ponding`,
-   WH_female_notes = `Female Notes`,
-   pre_eyed_morts = `Pre-eyed Morts`,
-   tot_eyed_eggs = `Total Eyed Eggs`,
-   egg_donations = `Green Or Eyed Egg Donations`,
-   total_hatched = `Total at Hatched Stage`,
-   hatch_ponding_morts = `Hatch to Ponding Morts`,
-   tot_ponding = `Total at Ponding`
+    WH_hatchery_id = `Hatchery Fish ID`,
+    WH_egg_take_date  = `Egg Take Date`,
+    WH_surv_green_eyed = `% Survival Green-Eyed`,
+    WH_surv_green_hatch = `% Survival: Green - Hatch`,
+    WH_surv_green_pond = `% Survival: Green - Ponding`,
+    WH_female_notes = `Female Notes`,
+    pre_eyed_morts = `Pre-eyed Morts`,
+    tot_eyed_eggs = `Total Eyed Eggs`,
+    egg_donations = `Green Or Eyed Egg Donations`,
+    total_hatched = `Total at Hatched Stage`,
+    hatch_ponding_morts = `Hatch to Ponding Morts`,
+    tot_ponding = `Total at Ponding`
+  ) |> 
+  dplyr::select(
+    WH_hatchery_id,
+    WH_egg_take_date, 
+    WH_surv_green_eyed, 
+    WH_surv_green_hatch,
+    WH_surv_green_pond, 
+    WH_female_notes,
+    pre_eyed_morts,
+    tot_eyed_eggs,
+    egg_donations,
+    total_hatched,
+    hatch_ponding_morts,
+    tot_ponding
   ) |> 
   drop_na(
     WH_hatchery_id
@@ -63,6 +71,8 @@ wh_2023_long <- wh_2023 |>
 
 # Examine distribution of variables --------------------------------------------
 ## Egg nmol T
+
+
 ggplot(data = wh_2023, aes(x = nmol_T_egg)) +
   geom_density() +
   geom_rug()
@@ -73,9 +83,10 @@ ggplot(data = wh_2023, aes(x = nmol_T_egg)) +
     
 ##
 ggplot(data = wh_2023) +
-  geom_point(aes(x = nmol_T_egg, y = surv_pct))
+  geom_point(aes(x = nmol_T_egg, y = surv_pct),
+             size = 3)
 
-# 4 param model
+# 2 param model
 
 model_fit <- drm(
   surv_pct ~ nmol_T_egg,
@@ -87,7 +98,4 @@ model_fit <- drm(
 
 summary(model_fit)
 
-ed(model_fit)
 
-
-?drm
