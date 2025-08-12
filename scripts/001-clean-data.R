@@ -152,7 +152,7 @@ WH_dates <- USGS_id_df |>
     wh_hatchery_2023, 
     join_by(WH_hatchery_id == `Hatchery Fish ID`)
   ) |> 
-  mutate(collection_date = collection_date.x, collection_date.y) |> 
+  mutate(collection_date = coalesce(collection_date.x, collection_date.y)) |>   
   select(-collection_date.x, -collection_date.y)
 
 
