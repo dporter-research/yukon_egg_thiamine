@@ -56,13 +56,13 @@ p_egg_mass_distribution <- ggplot(data = canada_2023_df_egg_mass_trim,
 
 p_egg_mass_distribution 
 
-ggsave(
-  filename = "output/figures/egg_mass_distribution_canada.png", 
-  plot = p_egg_mass_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_mass_distribution_canada.png", 
+#  plot = p_egg_mass_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Violin Plot -------------------------------------------------------------------
 p_egg_mass_site <- ggplot() +
@@ -114,13 +114,13 @@ p_egg_mass_site_points <- p_egg_mass_site_points +
 
 p_egg_mass_site_points
 
-ggsave(
-  filename = "output/figures/egg_mass_site_canada.png", 
-  plot = p_egg_mass_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_mass_site_canada.png", 
+#  plot = p_egg_mass_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg Thiamine Concentration -------------------------------------------------
 
@@ -140,13 +140,13 @@ p_egg_thiamine_conc_distribution <- ggplot(data = canada_2023_df_egg_mass_trim,
 
 p_egg_thiamine_conc_distribution 
 
-ggsave(
-  filename = "output/figures/egg_thiamine_concentration_distribution_canada.png", 
-  plot = p_egg_thiamine_conc_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_thiamine_concentration_distribution_canada.png", 
+#  plot = p_egg_thiamine_conc_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Violin Plot -------------------------------------------------------------------
 
@@ -212,13 +212,13 @@ p_egg_thiamine_conc_site_points <- p_egg_thiamine_conc_site_points +
 
 p_egg_thiamine_conc_site_points
 
-ggsave(
-  filename = "output/figures/egg_thiamine_conc_site_canada.png", 
-  plot = p_egg_thiamine_conc_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_thiamine_conc_site_canada.png", 
+#  plot = p_egg_thiamine_conc_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg thiamine content (per egg) ---------------------------------------------
 
@@ -238,13 +238,13 @@ p_egg_total_thiamine_distribution <- ggplot(data = canada_2023_df,
 
 p_egg_total_thiamine_distribution 
 
-ggsave(                      
-  filename = "output/figures/egg_total_thiamine_distribution_canada.png", 
-  plot = p_egg_total_thiamine_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(                      
+#  filename = "output/figures/egg_total_thiamine_distribution_canada.png", 
+#  plot = p_egg_total_thiamine_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -296,13 +296,13 @@ egg_total_thiamine_kw
 
 # no significant differences between sites exist, no post-hoc analysis
 
-ggsave(
-  filename = "output/figures/egg_total_thiamine_site_canada.png", 
-  plot = p_egg_total_thiamine_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_total_thiamine_site_canada.png", 
+#  plot = p_egg_total_thiamine_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 
 ### Egg percent moisture -------------------------------------------------------
@@ -325,13 +325,13 @@ p_egg_pct_moisture_distribution
 
 # Not a normal distribution, can't use ANOVA or Welch's ANOVA
 
-ggsave(
-  filename = "output/figures/egg_pct_moisture_distribution_canada.png", 
-  plot = p_egg_pct_moisture_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_pct_moisture_distribution_canada.png", 
+#  plot = p_egg_pct_moisture_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Violin Plot -------------------------------------------------------------------
 
@@ -395,13 +395,13 @@ p_egg_pct_moisture_site_points <- p_egg_pct_moisture_site_points +
 
 p_egg_pct_moisture_site_points
 
-ggsave(
-  filename = "output/figures/egg_pct_moisture_site_canada.png", 
-  plot = p_egg_pct_moisture_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_pct_moisture_site_canada.png", 
+#  plot = p_egg_pct_moisture_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg total moisture ---------------------------------------------------------
 
@@ -421,13 +421,13 @@ p_egg_total_moisture_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_moisture_distribution 
 
-ggsave(
-  filename = "output/figures/egg_total_moisture_distribution_canada.png", 
-  plot = p_egg_total_moisture_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_total_moisture_distribution_canada.png", 
+#  plot = p_egg_total_moisture_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -508,13 +508,13 @@ p_egg_total_moisture_site_points <- p_egg_total_moisture_site_points +
 
 p_egg_total_moisture_site_points
 
-ggsave(
-  filename = "output/figures/egg_total_moisture_site_canada.png", 
-  plot = p_egg_total_moisture_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_total_moisture_site_canada.png", 
+#  plot = p_egg_total_moisture_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 
 ### Egg % lipid dry ------------------------------------------------------------
@@ -535,13 +535,13 @@ p_egg_pct_lipid_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_pct_lipid_distribution 
 
-ggsave(                      
-  filename = "output/figures/egg_pct_lipid_distribution_canada.png", 
-  plot = p_egg_pct_lipid_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(                      
+#  filename = "output/figures/egg_pct_lipid_distribution_canada.png", 
+#  plot = p_egg_pct_lipid_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -624,13 +624,13 @@ p_egg_pct_lipid_site_points <- p_egg_pct_lipid_site_points +
 
 p_egg_pct_lipid_site_points
 
-ggsave(
-  filename = "output/figures/egg_pct_lipid_site_canada.png", 
-  plot = p_egg_pct_lipid_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_pct_lipid_site_canada.png", 
+#  plot = p_egg_pct_lipid_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg total lipid content ----------------------------------------------------
 
@@ -650,13 +650,13 @@ p_egg_total_lipid_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_lipid_distribution 
 
-ggsave(                      
-  filename = "output/figures/egg_total_lipid_distribution_canada.png", 
-  plot = p_egg_total_lipid_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(                      
+#  filename = "output/figures/egg_total_lipid_distribution_canada.png", 
+#  plot = p_egg_total_lipid_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -739,13 +739,13 @@ p_egg_total_lipid_site_points <- p_egg_total_lipid_site_points +
 
 p_egg_total_lipid_site_points
 
-ggsave(
-  filename = "output/figures/egg_total_lipid_site_canada.png", 
-  plot = p_egg_total_lipid_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_total_lipid_site_canada.png", 
+#  plot = p_egg_total_lipid_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg % protein dry (estimate) -----------------------------------------------
 
@@ -765,13 +765,13 @@ p_egg_pct_protein_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_pct_protein_distribution 
 
-ggsave(                      
-  filename = "output/figures/egg_pct_protein_distribution_canada.png", 
-  plot = p_egg_pct_protein_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(                      
+#  filename = "output/figures/egg_pct_protein_distribution_canada.png", 
+#  plot = p_egg_pct_protein_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -854,13 +854,13 @@ p_egg_pct_protein_site_points <- p_egg_pct_protein_site_points +
 
 p_egg_pct_protein_site_points
 
-ggsave(
-  filename = "output/figures/egg_pct_protein_site_canada.png", 
-  plot = p_egg_pct_protein_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_pct_protein_site_canada.png", 
+#  plot = p_egg_pct_protein_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg total protein (estimate) content ---------------------------------------
 
@@ -880,13 +880,13 @@ p_egg_total_protein_distribution <- ggplot(data = canada_2023_df_moisture_trim,
 
 p_egg_total_protein_distribution 
 
-ggsave(                      
-  filename = "output/figures/egg_total_protein_distribution_canada.png", 
-  plot = p_egg_total_protein_distribution,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(                      
+#  filename = "output/figures/egg_total_protein_distribution_canada.png", 
+#  plot = p_egg_total_protein_distribution,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 #### Q-Q plot to check for normal distribution at each site --------------------
 
@@ -969,13 +969,13 @@ p_egg_total_protein_site_points <- p_egg_total_protein_site_points +
 
 p_egg_total_protein_site_points
 
-ggsave(
-  filename = "output/figures/egg_total_protein_site_canada.png", 
-  plot = p_egg_total_protein_site_points,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/egg_total_protein_site_canada.png", 
+#  plot = p_egg_total_protein_site_points,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ## Making multi panel plots ----------------------------------------------------
 
@@ -1053,13 +1053,13 @@ p_total_egg_content <- (
 
 p_total_egg_content
 
-ggsave(
-  filename = "output/figures/total_egg_contents_site_canada.png", 
-  plot = p_total_egg_content,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/total_egg_contents_site_canada.png", 
+#  plot = p_total_egg_content,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 ### Egg % contents plot --------------------------------------------------------
 
@@ -1102,13 +1102,13 @@ p_pct_egg_content <- (
 
 p_pct_egg_content
 
-ggsave(
-  filename = "output/figures/pct_egg_contents_site_canada.png", 
-  plot = p_pct_egg_content,                         
-  width = 7,                                        
-  height = 5,                                      
-  dpi = 300                                        
-)
+#ggsave(
+#  filename = "output/figures/pct_egg_contents_site_canada.png", 
+#  plot = p_pct_egg_content,                         
+#  width = 7,                                        
+#  height = 5,                                      
+#  dpi = 300                                        
+#)
 
 # Egg Composistion Summary Table -----------------------------------------------
 
